@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_purchase_order_form" model="ir.ui.view">
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[last()]" position='after'>
+                    <button name="print_xlsx_report" class="oe_highlight" string="Print to Excel" type="object"/>
+                </xpath>
+
+                <notebook position="inside">
+                    <page string="Costing" groups="purchase.group_purchase_manager">
+                        <group>
+                            <group string='Cost Items'>
+                                <field name='cost_item_ids' nolabel="1">
+                                    <tree editable='bottom'>
+                                        <field name='costing_item_id'/>
+                                        <field name='amount'/>
+                                    </tree>
+                                </field>
+                            </group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="cost_items_total">
+                                <field name="cost_items_amount_total"
+                                   string="Cost Items Total"
+                                   />
+                                <field name="cost_base_amount"
+                                   string="Total on PO"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                <field name="currency_factor"
+                                   string="Currency Factor"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                <field name="cost_base_amount_lcy"
+                                   string="Total on PO (LCY)"/>
+                                <div>
+                                    <button name="btn_compute_landed_cost_factor" string="(update)" class="oe_link oe_edit_only" type="object" help="Recompute Landed Cost Factor"/>
+                                </div>
+                            </group>
+                        </group>
+                        <group string='Costing'>
+                            <group>
+                                <field name="landed_cost_factor"/>
+                                <field name="base_pricing_factor"/>
+                                <field name="pricing_preference"/>
+                            </group>
+                            <group>
+                                <button string="Compute Costing" name="compute_costing_lines" type="object"/>
+                                <button string="Adjust Costing" name="adjust_costing" type="object"/>
+                                <button string="Revert Costing" name="revert_costing" type="object"/>
+                                <button string="Update Supplier Prices" name="update_supplier_pricelist" type="object"/>
+                            </group>
+                        </group>
+                        <field name="costing_ids">
+                            <tree editable="bottom">
+                                <field name="product_id"/>
+                                <field name="old_cost"/>
+                                <field name="new_cost"/>
+                                <field name="cost_difference"/>
+                                <field name="old_price"/>
+                                <field name='computed_price'/>
+                                <field name="new_price"/>
+                                <field name="price_difference"/>
+                                <field name="old_margin"/>
+                                <field name="new_margin"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='view_purchase_costing_item_form'>
+            <field name='name'>purchase.costing.items.form</field>
+            <field name='model'>purchase.costing.item</field>
+            <field name='arch' type='xml'>
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name='name'/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='view_purchase_costing_item_tree'>
+            <field name='name'>purchase.costing.items.tree</field>
+            <field name='model'>purchase.costing.item</field>
+            <field name='arch' type='xml'>
+                <tree>
+                    <field name='name'/>
+                </tree>
+            </field>
+        </record>
+
+        <record model='ir.actions.act_window' id='action_list_purchase_costing_items'>
+            <field name='name'>Purchase Costing Items</field>
+            <field name='res_model'>purchase.costing.item</field>
+            <field name='view_type'>form</field>
+            <field name='view_mode'>tree,form</field>
+        </record>
+
+        <menuitem name='Landed Cost' id='menu_purchase_landed_cost_configuration' parent='purchase.menu_purchase_config_purchase' groups="purchase.group_purchase_manager"/>
+        <menuitem name='Cost Items' id='menu_purchase_cost_items' action='action_list_purchase_costing_items' parent='menu_purchase_landed_cost_configuration' sequence='10'/>
+    </data>
+</openerp>

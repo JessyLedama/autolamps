@@ -1,0 +1,17 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_account_config_settings">
+			<field name="name">account.config.settings.autolamps</field>
+			<field name="model">account.config.settings</field>
+			<field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//form//separator[@name='analytic_account']" position="before">
+            		<group string="ESD">
+            			<field name="esd_server_address" class="oe_inline" />
+            			<field name="esd_timeout" class="oe_inline" />
+            		</group>
+            	</xpath>
+            </field>
+		</record>
+	</data>
+</openerp>

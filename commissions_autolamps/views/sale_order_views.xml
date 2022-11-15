@@ -1,0 +1,119 @@
+<openerp>
+  <data>
+    <!-- sale.order.line.agent tree view -->
+    <record id="sale_order_line_agent_view_tree" model="ir.ui.view">
+      <field name="name">sale.order.line.agent.view.tree</field>
+      <field name="model">sale.order.line.agent</field>
+      <field name="arch" type="xml">
+        <tree create="false" edit="false">
+          <field name="sale_order_id" options="{'no_create': True, 'no_open': True}"/>
+          <field name="date_order" options="{'no_create': True, 'no_open': True}"/>
+          <field name="agent" options="{'no_create': True, 'no_open': True}" />
+          <field name="product_id" options="{'no_create': True, 'no_open': True}"/>
+          <field name="commission" options="{'no_create': True, 'no_open': True}"/>
+          <field name="amount"/>
+          <field name="total_amount"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- sale.order.line.agent form view -->
+    <record id="sale_order_line_agent_view_form" model="ir.ui.view">
+      <field name="name">sale.order.line.agent.view.form</field>
+      <field name="model">sale.order.line.agent</field>
+      <field name="arch" type="xml">
+        <form string="Sale Order Line Agent" create="false" edit="false">
+          <sheet>
+            <div>
+              <h1><field name="display_name" /></h1>
+            </div>
+            <group>
+              <group>
+                <field name="sale_order_id" options="{'no_create': True, 'no_open': True}" />
+                <field name="product_id" options="{'no_create': True, 'no_open': True}" />
+                <field name="agent" options="{'no_create': True, 'no_open': True}"/>
+                <field name="commission" options="{'no_create': True, 'no_open': True}"/>
+              </group>
+              <group>
+                <field name="date_order" />
+                <field name="total_amount"/>
+                <field name="amount"/>
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- sale.order.line.agent search view -->
+    <record id="sale_order_line_agent_view_search" model="ir.ui.view">
+      <field name="name">sale.order.line.agent.view.search</field>
+      <field name="model">sale.order.line.agent</field>
+      <field name="arch" type="xml">
+        <search string="Sale Order Line Agent Search">
+          <field name="sale_order_id"/>
+          <field name="product_id"/>
+          <field name="agent"/>
+          <field name="commission"/>
+          <field name="date_order"/>
+          <field name="amount"/>
+          <field name="total_amount"/>
+          <filter string="My Sale Agent Line" domain="[('user_id','=',uid)]" name="my_sale_agent_line_filter"/>
+          <separator/>
+          <group expand="0" string="Group By">
+              <filter string="Agent" domain="[]" context="{'group_by':'agent'}"/>
+              <filter string="Commission" domain="[]" context="{'group_by':'commission'}"/>
+              <filter string="Sale Order" domain="[]" context="{'group_by':'sale_order_id'}"/>
+              <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+              <filter string="Order date" domain="[]" context="{'group_by':'date_order'}"/>
+          </group>
+        </search>
+      </field>
+    </record>
+
+    <!-- sale.order smart button inherit form view -->
+    <record id="sale_order_approvals_form" model="ir.ui.view">
+        <field name="name">sale.order.inherit.view.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="approvals_customer_credit_limit.sale_order_approvals_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div" position="inside">
+                <button name="action_view_agent_lines" type="object" attrs="{'invisible': [('commission_total', '=', 0.00)]}"
+                string="Agent Commissions" class="oe_stat_button" icon="fa-list" groups='base.group_sale_salesman'>
+                  <!-- <field name="commission_total" widget="statinfo"/> -->
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record model='ir.ui.view' id='view_order_agent_form_inherit'>
+      <field name='name'>sale.order form commissions inherit</field>
+      <field name='model'>sale.order</field>
+      <field name='inherit_id' ref='sale_commission.view_order_agent_form_inherit'/>
+      <field name='arch' type='xml'>
+
+        <xpath expr="//field[@name='order_line']/tree//field[@name='commission_free']" position="attributes">
+          <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+        </xpath>
+
+        <xpath expr="//field[@name='order_line']/tree//field[@name='agents']" position="attributes">
+          <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+        </xpath>
+
+         <xpath expr="//field[@name='order_line']/form//field[@name='commission_free']" position="attributes">
+           <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+         </xpath>
+
+         <xpath expr="//field[@name='order_line']/form//field[@name='agents']" position="attributes">
+           <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+         </xpath>
+
+         <field name='commission_total' position='attributes'>
+              <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+         </field>
+
+      </field>
+
+    </record>
+  </data>
+</openerp>

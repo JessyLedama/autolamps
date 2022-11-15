@@ -1,0 +1,115 @@
+<openerp>
+    <data>
+        <!-- sale.commission.settlement inherit tree view -->
+        <record id="view_settlement_tree" model="ir.ui.view">
+            <field name="name">sale.commission.settlement.inherit.view.tree</field>
+            <field name="model">sale.commission.settlement</field>
+            <field name="inherit_id" ref="sale_commission.view_settlement_tree"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='total']" position="after">
+                    <field name="total_payable"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sale.commission.settlement inherit form view -->
+        <record id="view_settlement_form" model="ir.ui.view">
+            <field name="name">sale.commission.settlement.inherit.view.form</field>
+            <field name="model">sale.commission.settlement</field>
+            <field name="inherit_id" ref="sale_commission.view_settlement_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//sheet/group[3]" position="replace">
+                    <div class="oe_clear"/>
+                </xpath>
+                <xpath expr="//sheet/group[2]" position="replace">
+                    <notebook>
+                        <page name="settlement_line" string="Commission Lines">
+                            <field name="lines" nolabel="1">
+                                <tree string="Settlement lines" colors="green:payable == True;red:payable == False">
+                                    <field name="payable" invisible="1"/>
+                                    <field name="date"/>
+                                    <field name="invoice"/>
+                                    <field name="invoice_line"/>
+                                    <field name="commission"/>
+                                    <field name="settled_amount" sum="Settled Amount"/>
+                                    <field name="total_amount" sum="Gross Sales"/>
+                                </tree>
+                            </field>
+                            <group>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="commission_total">
+                                    <field name="gross_total"
+                                   string="Gross Sales"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                   <field name="total_commissionable_sales"
+                                   string="Gross Commissionable Sales"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                     <field name="agent_target"
+                                   string="Target"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                    <field name="sales_over_target"
+                                   string="Net Sales"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total"
+                                   string="Gross Commission"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total_valid"
+                                   string="Valid Commission"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                    <field name="payable_factor"
+                                   string="Commission Factor"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                    <field name="total_payable"
+                                   string="Payable Commission"
+                                   class="oe_subtotal_footer_separator"
+                                   widget="monetary"
+                                   options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <group>
+                                    <div class="oe_inline">
+                                        <span>
+                                            <p>Gross Commissionable Sales: Invoices paid on time</p>
+                                        </span>
+                                        <span>
+                                            <p>Net Sales: Gross Commissionable Sales - Target</p>
+                                        </span>
+                                        <span>
+                                            <p>Valid Commission: On Invoices paid on time</p>
+                                        </span>
+                                        <span>
+                                            <p> Payable Factor: Net Sales / Gross Commissionable Sales
+                                                Payable Factor must be between 0 and 1
+                                            </p>
+                                        </span>
+                                        <span>
+                                            <p>Payable Commission: Commission Factor * Gross Commissionable Commission</p>
+                                        </span>
+                                    </div>
+                                </group>
+                            </group>
+                        </page>
+                        <page name="settlement_invoices" string="Sale Invoices">
+                            <field name="settlement_invoices">
+                                <tree>
+                                    <field name="date_invoice"/>
+                                    <field name="invoice_id"/>
+                                    <field name="total_commission" sum="Total Commission"/>
+                                    <field name="total_sales" Total="Agent Sales"/>
+                                    <field name="amount_total" sum="Total Sales"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,5 @@
+id,parent_id:id,sequence,name
+vat_input_taxable,,8,Taxable Purchases (VAT Input)
+vat_output_taxable,,9,Taxable Sales (VAT Output)
+vat_input,,11,Tax Paid (VAT Input)
+vat_output,,10,Tax Received (VAT Output)

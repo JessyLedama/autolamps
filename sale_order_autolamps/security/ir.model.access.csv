@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_order_line_sourced_user,sourced.order.line.user,model_sale_order_line_sourced,base.group_user,1,1,1,1
+access_lost_sales_salesman,Lost Sales Own Leads Salesman,model_lost_sale,base.group_sale_salesman,1,0,0,0
+access_lost_sales_all_salesman,Lost Sales All Leads Salesman,model_lost_sale,base.group_sale_salesman_all_leads,1,0,0,0
+access_lost_sales_manager,Lost Sales User,model_lost_sale,base.group_sale_manager,1,1,1,1
+access_followup_line_salesman,Followup Own Leads Salesman,account_followup.model_account_followup_followup_line,base.group_sale_salesman,1,1,1,0
+access_followup_line_all_salesman,Followup All Leads Salesman,account_followup.model_account_followup_followup_line,base.group_sale_salesman_all_leads,1,1,1,0
+access_followup_line_manager,Followup Manager,account_followup.model_account_followup_followup_line,base.group_sale_manager,1,1,1,0
+access_post_dated_cheques,Post Dated Cheques Own Leads Salesman,accounting_autolamps.model_post_dated_cheques,base.group_sale_salesman,1,0,0,0

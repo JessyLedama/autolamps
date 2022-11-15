@@ -1,0 +1,25 @@
+<openerp>
+    <data>
+        <!-- stock.transfer_details inherit form view -->
+        <record id="view_stock_return_picking_form" model="ir.ui.view">
+            <field name="name">stock.return.picking.inherit.view.form</field>
+            <field name="model">stock.return.picking</field>
+            <field name="inherit_id" ref="stock.view_stock_return_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='move_dest_exists']" position="before">
+                    <!-- <group> -->
+                        <field name="products_to_transfer" widget="radio" string="Products to Transfer"/>
+                        <field name="all_products" widget="many2many_tags" invisible="1"/>
+                        <field name="all_product_return_moves" widget="many2many_tags" invisible="1"/>
+                        <field name="product_ids" attrs="{'invisible': [('products_to_transfer', '=', 'all')]}"
+                        domain="[('id', 'in', all_products[0][2])]" 
+                        widget="many2many_tags" options="{'no_create': True, 'no_open': True}"/>
+                    <!-- </group> -->
+                </xpath>
+                <xpath expr="//footer/button[1]" position="before">
+                    <button string="Filter Items" attrs="{'invisible': [('products_to_transfer', '=', 'all')]}" name="filter_product_return_moves" type="object" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,64 @@
+<openerp>
+    <data>
+        <record id="sale_order_report_view" model="ir.ui.view">
+            <field name="name">sale.report.wizard</field>
+            <field name="model">sale.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Print Sale Summary Report">
+                    <group>
+                        
+                        <!-- <group>
+                            <field name="sale_order_ids">
+                                <tree  string="Sale Orders" editable="bottom"> 
+                                    <field name="date_order"/>
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="user_id"/>
+                                    <field name="amount_total"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="total" class="oe_subtotal_footer_separator" widget='monetary'/>
+                        </group> -->
+                    </group>
+                    <footer>
+                    	<button name="action_print_reports" string="Print Report" type="object"/>
+                    </footer>
+                </form>
+            </field>     
+        </record>
+
+        <!-- <record id="action_sale_report" model="ir.actions.server">
+            <field name="name">Sales Summary Report</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="sale_order_autolamps.model_sale_report_wizard"/>
+            <field name="state">code</field>
+            <field name="condition">True</field>
+            <field name="code">action = self.print_sale_orders(cr, uid, context['active_ids'], context=context)
+            </field>
+        </record> -->
+
+        <record id="action_sale_report" model="ir.actions.act_window">
+            <field name="name">Sales Summary Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.report.wizard</field>
+            <field name="src_model">sale.order</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="action_agent_commission_report_values">
+            <field name="name">Sales Summary Report</field>
+            <field name="model_id" ref="sale.model_sale_order" />
+            <field eval="'client_print_multi'" name="key2"/>
+            <!-- <field name="key2">client_print_multi</field> -->
+            <field name="value" eval="'ir.actions.act_window,%d'%action_sale_report"/>
+            <field name="key">action</field>
+            <field name="model" eval="'sale.order'"/>
+        </record>
+    </data>
+</openerp>
+

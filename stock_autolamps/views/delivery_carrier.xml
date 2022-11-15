@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_delivery_courier_tree" model="ir.ui.view">
+            <field name="name">delivery.courier.tree</field>
+            <field name="model">delivery.courier</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_delivery_courier_form" model="ir.ui.view">
+            <field name="name">delivery.courier.form</field>
+            <field name="model">delivery.courier</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group name="left">
+                                <field name="name"/>
+                            </group>
+                            <group name="right">
+                                <field name="code"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <act_window
+            id="action_delivery_courier"
+            res_model="delivery.courier"
+            name="Delivery Couriers"
+            view_mode="tree,form"
+        />
+
+        <menuitem
+            id="menu_delivery_courier"
+            name="Delivery Couriers"
+            action="action_delivery_courier"
+            parent="stock.menu_stock_configuration"
+            sequence="3"/>
+
+    </data>
+</openerp>

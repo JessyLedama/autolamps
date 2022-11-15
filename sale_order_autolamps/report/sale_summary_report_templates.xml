@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <template id="report_sale_order_summary_document">
+      <t t-call="report.external_layout">
+        <div class="page">
+          <div class="oe_structure"/>
+            <h2>
+                <span>Sale Order Summary </span>
+            </h2>
+
+            <!-- <div class="row mt32 mb32" id="informations">
+                <div t-if="o.date_order" class="col-xs-3">
+                    <strong t-if="o.state not in ['draft','sent']">Date Ordered:</strong>
+                    <strong t-if="o.state in ['draft','sent']">Quotation Date:</strong>
+                    <p t-field="o.date_order"/>
+                </div>
+                <div t-if="o.user_id.name" class="col-xs-3">
+                    <strong>Salesperson:</strong>
+                    <p t-field="o.user_id.name"/>
+                </div>
+            </div> -->
+
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>SO No.</th>
+                        <th style="margin-left: 20px;">Customer</th>
+                        <th style="margin-left: 20px;">Salesperson</th>
+                        <th style="margin-left: 20px;">Amount</th>
+                        <th style="margin-left: 20px;">State</th>
+                    </tr>
+              </thead>
+              <tbody class="sale_tbody">
+                    <tr t-foreach="o.sale_order_ids" t-as="l">
+                        <td>
+                          <span t-field="l.date_order"/>
+                        </td>
+                        <td style="margin-left: 20px;">
+                            <span t-field="l.name"/>
+                        </td>
+                        <td style="margin-left: 20px;">
+                            <span t-field="l.partner_id"/>
+                        </td>
+                        <td style="margin-left: 20px;">
+                            <span t-field="l.user_id"/>
+                        </td>
+                        <td style="margin-left: 20px;">
+                            <span t-field="l.amount_total"/>
+                        </td>
+                        <td style="margin-left: 20px;">
+                            <span t-field="l.state"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr>
+                            <td><strong>Total</strong></td>
+                            <td class="text-right">
+                            <!-- FIX THIS MONETARY WIDGET -->
+                                <!-- <span t-field="o.amount_total"
+                                    t-field-options='{"widget": "monetary", "display_currency": "o.pricelist_id.currency_id"}'/> -->
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+          <div class="oe_structure"/>
+        </div>
+      </t>
+    </template>
+
+    <template id="report_sale_order_summary">
+      <t t-call="report.html_container">
+        <t t-foreach="doc_ids" t-as="doc_id">
+          <t t-raw="translate_doc(doc_id, doc_model, 'create_uid.lang', 'sale_order_autolamps.report_sale_order_summary_document')"/>
+        </t>
+      </t>
+    </template>
+
+  </data>
+</openerp>

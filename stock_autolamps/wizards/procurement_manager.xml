@@ -1,0 +1,35 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="procurement_manager_form">
+			<field name="name">procurement.manager.form</field>
+			<field name="model">procurement.manager</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<field name="state" widget="statusbar"/>
+					</header>
+					<sheet>
+						<group>
+							<field name = "picking_id" options="{'no_create': True,'no_create_edit': True}"/>
+						</group>
+						<notebook>
+							<page>
+								<field name="procurement_order_ids"/>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="procurement_manager_act">
+			<field name="name">procurement.manager.act</field>
+			<field name="res_model">procurement.manager</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+		<menuitem name="Procurement Orders Mass Action" id="procurement_manager_menu" action="procurement_manager_act" parent="stock.menu_stock_sched" sequence="90"/>
+	</data>
+</openerp>

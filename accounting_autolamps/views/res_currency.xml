@@ -1,0 +1,29 @@
+<openerp>
+	<data>
+		<record model = 'ir.ui.view' id = 'view_currency_form_autolamps'>
+			<field name = 'name'>Currency Form Autolamps</field>
+			<field name = 'model'>res.currency</field>
+			<field name = 'inherit_id' ref = 'base.view_currency_form'/>
+			<field name = 'arch' type = 'xml'>
+				<xpath expr="//field[@name='rate_silent']" position="after">
+					<field name = 'relational_rate'/>
+				</xpath>
+
+				<xpath expr="//tree/field[@name='name']" position="after">
+					<field name = 'relational_rate'/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model = 'ir.ui.view' id = 'view_currency_tree_autolamps'>
+			<field name = 'name'>Currency Tree Autolamps</field>
+			<field name = 'model'>res.currency</field>
+			<field name = 'inherit_id' ref = 'base.view_currency_tree'/>
+			<field name = 'arch' type = 'xml'>
+				<xpath expr="//field[@name='rate_silent']" position="after">
+					<field name = 'relational_rate'/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

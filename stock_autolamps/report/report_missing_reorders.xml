@@ -1,0 +1,14 @@
+<openerp>
+	<data>
+		<report
+            id="missing_reorders_xlsx"
+            model="product.product"
+            string="Missing Reorders Excel"
+            report_type="xlsx"
+            name="missing.reorders.xlsx"
+            file="missing.reorders.xlsx"
+            attachment_use="False" 
+        /> 
+
+	</data>
+</openerp>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_vendor_receipt_form_autolamps" model="ir.ui.view">
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[last()]" position='after'>
+                    <button name="send_receipt" class="oe_highlight" string="Send by mail" type="object"/>
+                    <button name="print_receipt" class="oe_highlight" string="Print Receipt" type="object"/>
+                </xpath>
+
+                <field name='journal_id' position='after'>
+                    <field name='pd_cheque_ids' domain="[('partner_id','=',partner_id)]" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

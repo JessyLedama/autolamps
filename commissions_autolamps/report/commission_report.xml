@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <report 
+            id="account_invoices_commissions"
+            model="account.invoice"
+            string="Invoice Commissions Report"
+            report_type="qweb-pdf"
+            name="commissions_autolamps.report_invoice_commissions"
+            file="commissions_autolamps.report_invoice_commissions"
+            attachment_use="True"
+            attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+            groups='account.group_account_invoice'
+        /> 
+
+        <report 
+            id="report_sale_commission_settlement_action"
+            string="Commission Settlement Report"
+            model="sale.commission.settlement" 
+            report_type="qweb-pdf"
+            file="commissions_autolamps.report_sale_commission_settlement" 
+            name="commissions_autolamps.report_sale_commission_settlement" 
+        />
+
+        <report 
+            id="report_sale_commission_settlement_invoice_action"
+            string="Commission Settlement Invoice Report"
+            model="sale.commission.settlement" 
+            report_type="qweb-pdf"
+            file="commissions_autolamps.report_sale_commission_settlement_invoice" 
+            name="commissions_autolamps.report_sale_commission_settlement_invoice" 
+        />
+
+        <report 
+            id="report_sale_order_commissions"
+            string="Sale Commissions Report"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            file="commissions_autolamps.report_saleorder_commissions" 
+            name="commissions_autolamps.report_saleorder_commissions"
+            groups='base.group_sale_salesman' 
+        />
+
+        <report 
+            id="report_agent_commission_summary" 
+            model="agent.commission.report" 
+            string="Agent Commissions Report"
+            report_type="qweb-pdf"
+            name="commissions_autolamps.report_agent_commission" 
+            file="commissions_autolamps.report_agent_commission"
+        />
+
+        <report 
+            id="report_settlement_commission_summary" 
+            model="settlement.summary.wizard" 
+            string="Settlement Summary"
+            report_type="qweb-pdf"
+            name="commissions_autolamps.report_settlement_summary" 
+            file="commissions_autolamps.report_settlement_summary"
+        />
+    </data>
+</openerp>

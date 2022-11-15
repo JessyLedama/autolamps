@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- sale.order.line inherit search view -->
+        <record id="view_sales_order_line_filter" model="ir.ui.view">
+            <field name="name">sale.order.line.inherit.view.search</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//separator" position="after">
+                    <filter icon="terp-go-month" string="Today" name="today"
+                            domain="[('date_order','&lt;=', (datetime.date.today()).strftime('%Y-%m-%d')),('date_order','&gt;=',(datetime.date.today()).strftime('%Y-%m-%d'))]"
+                            help="Ordered today"/>
+                    <filter icon="terp-go-month" string="Yesterday"  name="yesterday"
+                            domain="[('date_order','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))), ('date_order','&lt;=', ((context_today()+datetime.timedelta(days=0)).strftime('%Y-%m-%d 00:00:00')))]"
+                            help="Ordered yesterday"/>
+                    <filter icon="terp-go-month" string="This Month" name="this_month"
+                            domain="[('date_order','&lt;=', (datetime.date.today() + relativedelta(day=31)).strftime('%Y-%m-%d')),('date_order','&gt;=',(datetime.date.today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"
+                            help="Ordered this month"/>
+                    <filter icon="terp-go-month" string="Last Month" name="last_month"
+                            domain="[('date_order','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-%m-01')),('date_order','&lt;',time.strftime('%Y-%m-01'))]"
+                            help="Ordered last month"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- sale.order.line graph view -->
+        <record id="sale_order_line_view_graph" model="ir.ui.view">
+            <field name="name">sale.order.line.view.graph</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <graph string="Lost Sales" type="bar">
+                    <field name="order_id" type="row"/>
+                    <field name="product_id" type="row"/>
+                    <field name="lost_sale_qty" type="measure"/>
+                    <field name="lost_sale_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- sale.order.line action window -->
+        <record id="sale_order_line_lost_sales_action" model="ir.actions.act_window">
+            <field name="name">Lost Sales</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">graph</field>
+            <field name="domain">[('state', '=', 'done')]</field>
+            <field name="search_view_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="context">{"search_default_this_month":1}</field>
+        </record>
+
+        <record id="action_sale_order_line_lost_sales_graph" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="sale_order_line_lost_sales_action"/>
+            <field name="view_id" ref="sale_order_line_view_graph" />
+            <field name="view_mode">graph</field>
+            <field name="sequence" eval="2"/>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="lost_sales_menu_act" name="Lost Sales" parent="base.menu_sales" action="sale_order_line_lost_sales_action" sequence="7"/>
+    </data>
+</openerp>

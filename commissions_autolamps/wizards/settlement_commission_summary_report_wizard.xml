@@ -1,0 +1,38 @@
+<openerp>
+    <data>
+        <record id="setllement_report_view" model="ir.ui.view">
+            <field name="name">settlement.report</field>
+            <field name="model">settlement.summary.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Print Agent Commissions Report">
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                        </group>
+                        <group>
+                            <field name="date_to" />
+                        </group>
+                    </group>
+                    <footer>
+                    	<button name="action_print_reports" string="Print Report" type="object"/>
+                    </footer>
+                </form>
+            </field>     
+        </record>
+
+        <record id="action_setllement_report_wizard" model="ir.actions.act_window">
+            <field name="name">Agent Commission Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">settlement.summary.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Settlement Report" id="menu_settlements_report"
+                  parent="base.menu_sales" groups="base.group_sale_manager"
+                  action="action_setllement_report_wizard"/>
+                  
+    </data>
+</openerp>
+

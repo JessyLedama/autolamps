@@ -1,0 +1,16 @@
+<openerp>
+    <data noupdate="0">
+        <record id="product.access_product_template_sale_manager" model="ir.model.access">
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+        <record id="product.access_product_product_sale_manager" model="ir.model.access">
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+    </data>
+</openerp>

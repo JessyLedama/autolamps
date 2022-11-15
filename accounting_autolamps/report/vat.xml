@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="vat_xlsx"
+            model="account.move.line"
+            string="VAT Input/Output Excel"
+            report_type="xlsx"
+            name="vat.xlsx"
+            file="vat.xlsx"
+            attachment_use="False"
+        />
+        
+
+        <record model = 'ir.ui.view' id = 'vat_report_wizard'>
+            <field name = 'name'>VAT Input/Output Report Wizard</field>
+            <field name = 'model'>vat.report.wizard</field>
+            <field name = 'arch' type = 'xml'>
+                <form string = "VAT Input/Output Report Filters">
+                        <group string = "Filters">
+                            <group>
+                                <field name = 'start_date'/>
+                            </group>
+                            <group>
+                                <field name = 'end_date'/>
+                            </group>
+                            <group>
+                                <field name = 'input_accounts'/>
+                            </group>
+                            <group>
+                                <field name = 'output_accounts'/>
+                            </group>
+                            <notebook>
+                                <page string = 'Input VAT Accounts'>
+                                    <field name = 'purchase_account_ids'>
+                                        <tree editable = 'bottom'>
+                                            <field name = 'account_id'/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                            <notebook>
+                                <page string = 'Output VAT Accounts'>
+                                    <field name = 'sales_account_ids'>
+                                        <tree editable = 'bottom'>
+                                            <field name = 'account_id'/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                        <footer>
+                            <button name = "print_xlsx_report" type = "object" string = "Print VAT Report" class = "oe_highlight"/>
+                            or
+                            <button special = "cancel" string = "Cancel"/>
+                        </footer>
+                    </form>
+            </field>
+        </record>
+
+        <act_window id = "launch_vat_report_wizard"
+                name = "VAT Input/Output Report"
+                src_model = "account.move.line"
+                res_model = "vat.report.wizard"
+                view_mode = "form"
+                target = "new"
+                key2 = "client_action_multi" />
+
+        <menuitem name = "VAT Input/Output" id = 'vat_input_output_report_menu' parent = "account.menu_finance_generic_reporting" sequence = "20" action = "launch_vat_report_wizard"/>
+    </data>
+
+</openerp>

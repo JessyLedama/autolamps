@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_form">
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="arch" type="xml">
+                <field name="receipt_footer" position="after">
+                    <field name="printer_name" placeholder="Enter the printer name"/>
+                    <field name="esd_option" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

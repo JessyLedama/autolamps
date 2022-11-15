@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_purchase_costing,purchase_costing_user,model_purchase_costing,purchase.group_purchase_user,1,1,1,1
+access_purchase_costing_item,purchase_costing_item_user,model_purchase_costing_item,purchase.group_purchase_user,1,1,1,1
+access_purchase_costing_item_lines,purchase_costing_item_lines_user,model_purchase_costing_item_lines,purchase.group_purchase_user,1,1,1,1
+

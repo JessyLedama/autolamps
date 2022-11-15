@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- lost.sale search view -->
+        <record id="lost_sale_view_search" model="ir.ui.view">
+            <field name="name">lost.sale.view.search</field>
+            <field name="model">lost.sale</field>
+            <field name="arch" type="xml">
+                <search string="Lost Sales">
+                    <field name="order_id"/>
+                    <field name="partner_id" operator="child_of"/>
+                    <field name="product_id"/>
+                    <field name="user_id"/>
+                    <field name="categ_id"/>
+                    <field name="state"/>
+                    <separator/>
+                    <filter icon="terp-go-month" string="Today" name="today"
+                            domain="[('date','&lt;=', (datetime.date.today()).strftime('%Y-%m-%d')),('date','&gt;=',(datetime.date.today()).strftime('%Y-%m-%d'))]"
+                            help="Ordered today"/>
+                    <filter icon="terp-go-month" string="Yesterday"  name="yesterday"
+                            domain="[('date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))), ('date','&lt;=', ((context_today()+datetime.timedelta(days=0)).strftime('%Y-%m-%d 00:00:00')))]"
+                            help="Ordered yesterday"/>
+                    <filter icon="terp-go-month" string="This Month" name="this_month"
+                            domain="[('date','&lt;=', (datetime.date.today() + relativedelta(day=31)).strftime('%Y-%m-%d')),('date','&gt;=',(datetime.date.today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"
+                            help="Ordered this month"/>
+                    <filter icon="terp-go-month" string="Last Month" name="last_month"
+                            domain="[('date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-%m-01')),('date','&lt;',time.strftime('%Y-%m-01'))]"
+                            help="Ordered last month"/>
+                    <filter icon="terp-go-month" string="Last Three Months" name="last_three_month"
+                            domain="[('date','&gt;=',(context_today()-relativedelta(months=3)).strftime('%Y-%m-01')),('date','&lt;',time.strftime('%Y-%m-01'))]"
+                            help="Ordered last three months"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Product" name="product" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'product_id'}"/>
+                        <filter string="Product Category" name="category" context="{'group_by':'categ_id'}"/>
+                        <filter string="Order" name="sale_order" icon="terp-gtk-jump-to-rtl" domain="[]" context="{'group_by':'order_id'}"/>
+                        <filter string="Salesperson" name="user" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Customer" name="customer" context="{'group_by':'partner_id'}"/>
+                        <filter string="Order Date" name="date" context="{'group_by':'date'}"/>
+                        <filter string="State" name="state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <!-- lost.sale graph view -->
+        <record id="lost_sale_view_graph" model="ir.ui.view">
+            <field name="name">lost.sale.view.graph</field>
+            <field name="model">lost.sale</field>
+            <field name="arch" type="xml">
+                <graph string="Lost Sales" type="pivot">
+                    <field name="order_id" type="row"/>
+                    <field name="product_id" type="row"/>
+                    <field name="lost_sale_qty" type="measure"/>
+                    <field name="lost_sale_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- lost.sale action window -->
+        <record id="lost_sale_action" model="ir.actions.act_window">
+            <field name="name">Lost Sales</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">lost.sale</field>
+            <field name="view_mode">graph</field>
+            <field name="search_view_id" ref="sale_order_autolamps.lost_sale_view_search"/>
+            <field name="context">{"search_default_this_month":1, "search_default_product":1}</field>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="lost_sales_menu_act" name="Lost Sales" parent="base.menu_sales" action="lost_sale_action" sequence="7"/>
+    </data>
+</openerp>

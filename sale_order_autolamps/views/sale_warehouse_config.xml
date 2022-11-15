@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <!-- sale.warehouse tree view -->
+        <record id="sale_warehouse_view_tree" model="ir.ui.view">
+            <field name="name">sale.warehouse.view.tree</field>
+            <field name="model">sale.warehouse</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="warehouse_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- sale.warehouse form view -->
+        <record id="sale_warehouse_view_form" model="ir.ui.view">
+            <field name="name">sale.warehouse.view.form</field>
+            <field name="model">sale.warehouse</field>
+            <field name="arch" type="xml">
+                <form string="Sale Warehouse">
+                    <!-- TODO: Add a header with a title or something -->
+                    <sheet>
+                        <group>
+                            <field name="warehouse_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="warehouse_priority_lines">
+                                <tree string="Sales Warehouse Priority Lines" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="sequence" />
+                                    <!-- TODO: Parent warehouse field and domain -->
+                                    <field name="parent_warehouse_id" invisible="1"/>
+                                    <field name="warehouse_id" options="{'no_open': True, 'no_create': True}" domain="[('id', '!=', parent_warehouse_id)]"/>
+                                    <field name="route_id" options="{'no_open': True, 'no_create': True}"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sale_warehouse_action" model="ir.actions.act_window">
+            <field name="name">Sale Warehouses Priority</field>
+            <field name="res_model">sale.warehouse</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="sale_warehouse_menu_act" name="Sale Warehouses Priority" parent="base.menu_base_config" action="sale_warehouse_action" sequence="40"/>
+    </data>
+</openerp>

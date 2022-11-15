@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_pos_config_form">
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_config_form"/>
+            <field name="arch" type="xml">
+                <field name="sequence_id" position="after">
+                    <field name="custom_sequence_id"/>
+                </field>
+                <field name="receipt_footer" position="after">
+                    <field name="receipt_path" placeholder="Enter path /opt/..."/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="PrintRequisitionButtonWidget">
+        <li class="requsition-button">
+            <button>Print Requisition</button>
+        </li>
+    </t>
+</template>

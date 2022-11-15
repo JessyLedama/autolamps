@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+        <record id="lakeside_cargo" model="delivery.courier">
+            <field name="name">Lakeland Cargo Logistics Ltd</field>
+            <field name="code">LAKELAND</field>
+        </record>
+
+        <record id="ntl" model="delivery.courier">
+            <field name="name">Newspaper Transporters LTD</field>
+            <field name="code">N.T.L</field>
+        </record>
+
+        <record id="ficma" model="delivery.courier">
+            <field name="name">Ficma Home Logistics Ltd</field>
+            <field name="code">FICMA</field>
+        </record>
+
+        <record id="bps" model="delivery.courier">
+            <field name="name">Blessing Parcel Services</field>
+            <field name="code">B.P.S</field>
+        </record>
+
+        <record id="banjuka" model="delivery.courier">
+            <field name="name">Banjuka II Express Services</field>
+            <field name="code">BANJUKA</field>
+        </record>
+
+        <record id="sharoo" model="delivery.courier">
+            <field name="name">Sharoo Parcel Services</field>
+            <field name="code">SHAROO</field>
+        </record>
+
+        <record id="raha" model="delivery.courier">
+            <field name="name">Raha Parcel Services</field>
+            <field name="code">RAHA</field>
+        </record>
+
+        <record id="oltepes" model="delivery.courier">
+            <field name="name">Oltepes Investments Ltd</field>
+            <field name="code">OLTEPES</field>
+        </record>
+
+        <record id="vision" model="delivery.courier">
+            <field name="name">vision Parcel Services</field>
+            <field name="code">VISION</field>
+        </record>
+
+        <record id="buscar" model="delivery.courier">
+            <field name="name">Buscar Courier Services</field>
+            <field name="code">BUSCAR</field>
+        </record>
+
+        <record id="guardian" model="delivery.courier">
+            <field name="name">The Guardian Coach Courier</field>
+            <field name="code">GUARDIAN</field>
+        </record>
+
+        <record id="ena" model="delivery.courier">
+            <field name="name">ENA coach parcel service</field>
+            <field name="code">ENA</field>
+        </record>
+    </data>
+</openerp>

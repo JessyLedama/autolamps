@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- product.search form view -->
+        <record id="product_search_wizard_view_form" model="ir.ui.view">
+            <field name="name">product.search.view.form</field>
+            <field name="model">product.search</field>
+            <field name="arch" type="xml">
+                <form string="Product Search">
+                    <sheet>
+                        <group string="Enter the products to search">
+                            <field name="product_ids" widget="many2many_tags" options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="search_products" string="Search"  type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="product_search_wizard_action" model="ir.actions.act_window">
+            <field name="name">Product Search</field>
+            <field name="res_model">product.search</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="pos_autolamps.product_search_wizard_view_form"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</openerp>

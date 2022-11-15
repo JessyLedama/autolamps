@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data noupdate="1">
+        <record id="seq_product_temp_sequence_type" model="ir.sequence.type">
+            <field name="name">Product</field>
+            <field name="code">product.template</field>
+        </record>
+
+        <record id="seq_product_template" model="ir.sequence">
+            <field name="name">Product Sequences</field>
+            <field name="code">product.template</field>
+            <field eval="6" name="padding"/>
+            <field name="prefix">AL/</field>
+            <field name="implementation">no_gap</field>
+        </record>
+    </data>
+</openerp>

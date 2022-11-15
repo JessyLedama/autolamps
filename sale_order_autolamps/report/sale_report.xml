@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!-- NOT SURE IF THIS WILL WORK OR NEED A WIZARD AS BACKUP -->
+        <report 
+            id="report_sale_order_summary_action"
+            string="Sales Summary Report"
+            model="sale.report.wizard" 
+            report_type="qweb-pdf"
+            file="sale_order_autolamps.report_sale_order_summary" 
+            name="sale_order_autolamps.report_sale_order_summary" 
+        />
+    </data>
+</openerp>

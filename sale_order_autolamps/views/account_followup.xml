@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <!-- add base.group_sale_salesman to base view to allow user to see accounting tab -->
+        <record id="view_partner_followup_form" model="ir.ui.view">
+            <field name="name">res.partner.followup.form.inherit.sales.groups</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="model">res.partner</field>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman')),(4, ref('account.group_account_invoice'))]" />
+            <field name="arch" type="xml">
+                <page string="Internal Notes" position="after">
+                    <page string="Test" invisible='1'>
+                        
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <!-- add base.group_sale_salesman to base view to allow user to see followup tab -->
+        <record id="view_partner_inherit_followup_form" model="ir.ui.view">
+            <field name="name">res.partner.followup.form.inherit</field>
+            <field name="inherit_id" ref="account_followup.view_partner_inherit_followup_form" />
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <page string="Payment Follow-up" position="attributes">
+                    <attribute name="groups">base.group_sale_salesman</attribute>
+                </page>
+
+                <button name="do_button_print" position="attributes">
+                    <attribute name="groups">base.group_sale_salesman</attribute>
+                </button>
+
+                <button name="do_partner_mail" position="attributes">
+                    <attribute name="groups">base.group_sale_salesman</attribute>
+                </button>
+            </field>
+        </record>
+    </data>
+</openerp>
+
+        

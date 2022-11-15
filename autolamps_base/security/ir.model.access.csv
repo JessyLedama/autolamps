@@ -1,0 +1,18 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_partner_create,contact create,base.model_res_partner,autolamps_base.group_contact_creation,1,1,1,1
+access_account_move,account_move,account.model_account_move,,1,0,0,0
+access_account_move_line,account_move_line,account.model_account_move_line,,1,0,0,0
+access_account_account,account_account,account.model_account_account,,1,0,0,0
+access_account_invoice_line_agent,account_invoice_line_agent,commissions_autolamps.model_account_invoice_line_agent,,1,0,0,0
+access_res_partner,res_partner,account.model_res_partner,,1,0,0,0
+access_account_move_reconcile,account_move_reconcile,account.model_account_move_reconcile,,1,0,0,0
+access_sale_commission,sale_commission,commissions_autolamps.model_sale_commission,,1,0,0,0
+access_stock_warehouse,stock_warehouse,purchase.model_stock_warehouse,,1,0,0,0
+access_stock_location,stock_location,stock.model_stock_location,,1,0,0,0
+access_stock_quant,stock_quant,stock.model_stock_quant,,1,0,0,0
+access_product_uom,product_uom,product.model_product_uom,,1,0,0,0
+access_sale_order_line_sourced,sale_order_line_sourced,sale_order_autolamps.model_sale_order_line_sourced,,1,0,0,0
+access_sale_approval_warnings,sale_approval_warnings,approvals_customer_credit_limit.model_sale_approval_warnings,,1,0,0,0
+access_approval_request_lines,sale_approval_request_lines,approvals.model_approval_request_lines,,1,0,0,0
+access_sale_order_line_agent,sale_order_line_agent,commissions_autolamps.model_sale_order_line_agent,,1,0,0,0
+access_stock_move,access stock move,stock.model_stock_move,,1,0,0,0

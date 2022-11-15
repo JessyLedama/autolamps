@@ -1,0 +1,63 @@
+<openerp>
+	<data>
+		<record model = 'ir.ui.view' id = 'post_dated_cheque_reminder_form'>
+			<field name = 'name'>Post Date Cheque Reminder</field>
+			<field name = 'model'>post.dated.cheque.reminders</field>
+			<field name = 'arch' type = 'xml'>
+				<form>
+					<header>
+						<button name = 'scheduler_generate_pd_cheque_reminders' type = 'object' string = 'Generate PD Reminders' class = 'oe_highlight'/>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name = 'date'/>
+								<field name = 'company_id'/>
+							</group>
+							<group>
+								
+							</group>
+						</group>
+						<notebook>
+							<page string = "Reminders">
+								<field name = 'reminder_ids'/>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model = 'ir.ui.view' id = 'post_dated_cheque_reminder_tree'>
+			<field name = 'name'>Post Date Cheque Reminder</field>
+			<field name = 'model'>post.dated.cheque.reminders</field>
+			<field name = 'arch' type = 'xml'>
+				<tree>
+					<field name = 'date'/>
+				</tree>
+			</field>
+		</record>
+
+		<record model = 'ir.ui.view' id = 'post_dated_cheque_reminder_calendar'>
+			<field name = 'name'>Post Date Cheque Reminder Calendar</field>
+			<field name = 'model'>post.dated.cheque.reminders</field>
+			<field name = 'arch' type = 'xml'>
+				<calendar date_start = 'date' color = 'date'>
+					<field name = 'date'/>
+				</calendar>
+			</field>
+		</record>
+
+		<record model = 'ir.actions.act_window' id = 'post_dated_cheque_reminder_action'>
+			<field name = 'name'>Post Date Cheque Reminder</field>
+			<field name = 'res_model'>post.dated.cheque.reminders</field>
+			<field name = 'view_type'>form</field>
+			<field name = 'view_mode'>calendar,tree,form</field>
+		</record>
+
+		<menuitem name = 'PD Cheque Reminders' id = 'pd_cheque_reminders_menu' parent = 'base.menu_sales_followup' action = 'post_dated_cheque_reminder_action' sequence = '90'/>
+
+		<menuitem name = 'PD Cheque Reminders' id = 'pd_cheque_reminders_accounting_menu' parent = 'account_followup.menu_finance_followup' action = 'post_dated_cheque_reminder_action' sequence = '90'/>
+		
+	</data>
+</openerp>

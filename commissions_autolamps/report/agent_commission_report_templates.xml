@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_agent_commission_document">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <!-- <div class="row">
+                    </div> -->
+
+                    <h2>
+                        <span>Agent Commissions Report</span>
+                    </h2>
+                    <h3>
+                        <span>Agent</span>
+                        <span t-field="o.agent_id"/>
+                    </h3>
+
+                    <div class="row mt32 mb32">
+                        <div class="col-xs-2" t-if="o.date_from">
+                            <strong>Date From:</strong>
+                            <p t-field="o.date_from"/>
+                        </div>
+                        <div class="col-xs-2" t-if="o.date_to">
+                            <strong>Date To:</strong>
+                            <p t-field="o.date_to"/>
+                        </div>
+                    </div>
+
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Invoice Date</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Sale Orders</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Invoice</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Commission Amount</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Invoice Total</th>
+                                <!-- <th class="text-right" >Settlement</th> -->
+                                <!-- TODO: Get settlement, generated invoices -->
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.report_line_ids" t-as="l">
+                                <td><span t-field="l.invoice_date"/></td>
+                                <td style="margin-left: 20px;">
+                                    <!-- <span t-field="l.sale_orders"/> -->
+                                    <span t-esc="l.agent_id.get_invoice_sale_orders(l.invoice_id)"/>
+                                </td>
+                                <td style="margin-left: 20px;">
+                                    <span t-field="l.invoice_id"/>
+                                </td>
+                                <td class="text-right" style="margin-left: 20px;">
+                                    <span t-field="l.total_invoice_commission"/>
+                                    <!-- <span t-esc="l.agent_id.get_total_commission_by_invoice(l.invoice_id)"/> -->
+                                </td>
+                                <td class="text-right" style="margin-left: 20px;">
+                                    <span t-field="l.invoice_total"/>
+                                    <!-- <span t-esc="l.agent_id.get_total_commission_by_invoice(l.invoice_id)"/> -->
+                                </td>
+                                <!-- <td class="text-right">
+                                    <span t-esc="l.agent_id.get_settlements_by_invoice(l.invoice_id)"/>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 30px;">
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table table-condensed">
+                                <tr class="border-black">
+                                    <td><strong>Gross Sales</strong></td>
+                                    <td>
+                                        <span t-esc="o.get_total()"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Gross Commission</strong></td>
+                                    <td>
+                                        <span t-esc="o.get_total_commission()"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Target</strong></td>
+                                    <td>
+                                        <span t-esc="o.agent_id.target"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                   
+                                    <td><strong>Net Sales</strong></td>
+                                    <td>
+                                        <span t-esc="o.get_net_sales()"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p>Gross Sales - Target</p></td>
+                                </tr>
+                                <tr>
+                                    
+                                    <td><strong>Commission Factor</strong></td>
+                                    <td>
+                                        <span t-esc="o.get_payable_factor()"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p>Net Sales / Target
+                                    Commission Factor must be between 0 and 1</p></td>
+                                </tr>
+                                <tr class="border-black">
+                                    
+                                    <td><strong>Payable Commission</strong></td>
+                                    <td>
+                                        <span t-esc="o.get_payable_commission()"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><p>Commission Factor * Gross Commission</p></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_agent_commission">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'agent_id.lang', 'commissions_autolamps.report_agent_commission_document')"/>
+                </t>
+            </t>
+        </template>
+        
+    </data>
+</openerp>

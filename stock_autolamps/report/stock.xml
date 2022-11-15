@@ -1,0 +1,98 @@
+<openerp>
+	<data>
+        <template id="report_stock_variance">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+
+                            <div class="header" style="text-align:center; margin-top: 100px;">
+                                <h1>
+                                    <strong>
+                                        <u>Stock Variance Report</u>
+                                    </strong>
+                                </h1>
+                            </div>
+                        
+                            <div class="row mt32 mb32">
+                                <div name="name" class="col-md-12">
+                                    <strong>
+                                        Inventory Name:
+                                    </strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div name="location" class="col-md-12">
+                                    <strong>
+                                        Inventoried Location:
+                                    </strong>
+                                    <span t-field="o.location_id"/>
+                                </div>
+                                <div name="date" class="col-md-12">
+                                    <strong>
+                                        Inventory Date:
+                                    </strong>
+                                    <span t-field="o.date"/>
+                                </div>
+                                <div name="date" class="col-md-12">
+                                    <strong>
+                                        Inventory Of:
+                                    </strong>
+                                    <span t-field="o.filter"/>
+                                </div>
+                                <div name="date" class="col-md-12">
+                                    <strong>
+                                        Force Valuation Period:
+                                    </strong>
+                                    <span t-field="o.period_id"/>
+                                </div>
+                            </div>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Theoretical Qty</th>
+                                        <th>Real Qty</th>
+                                        <th>Variance</th>
+                                    </tr>
+                                </thead>
+                            
+                                <tbody class="sale_tbody">
+                                    <tr t-foreach="o.line_ids" t-as="l">
+                                        <td>
+                                            <span t-field="l.product_id"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="l.theoretical_qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="l.product_qty"/>
+                                        </td>
+                                        <td>
+                                            <span t-field="l.variance"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="variance_report"
+            model="stock.inventory"
+            string="Stock Variance Report"
+            report_type="qweb-pdf"
+            name="stock_autolamps.report_stock_variance"
+            file="stock_autolamps.report_stock_variance"
+            auto="False"
+        />
+
+        <template id="report_picking" name="Picking with Pos Order" inherit_id="stock.report_picking">
+            <xpath expr="//td[1]" position="inside">
+                <div t-if="o.pos_order_id"><span t-field="o.pos_order_id.pos_reference"/></div>
+            </xpath>
+        </template>
+	</data>
+</openerp>

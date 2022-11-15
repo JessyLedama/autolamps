@@ -1,0 +1,46 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_partner_inherit_followup_form">
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account_followup.view_partner_inherit_followup_form"/>
+            <field name="arch" type="xml">
+                <button name="do_button_print" position="before">
+					<button name="do_button_sms" string="Send SMS" type="object" attrs="{'invisible':[('payment_amount_due', '&lt;=', 0.0)]}"/>
+				</button>
+
+                <!-- SMS Action Buttons -->
+                <field name="phone" position="replace">
+                    <label for="phone"/>
+                    <div>
+                        <field name="phone" class="oe_inline"/>
+                        <button
+                            type="action"
+                            name="%(action_send_sms_wizard)d"
+                            class="btn btn-sm btn-link mb4 fa fa-envelope"
+                            aria-label="Send SMS"
+                            title="Send SMS"
+                            attrs="{'invisible':[('phone', '=', False)]}"
+                            context="{'default_phone': phone, 'default_partner_id': id}"
+                        />
+                    </div>
+                </field>
+
+                <field name="mobile" position="replace">
+                    <label for="mobile"/>
+                    <div>
+                        <field name="mobile" class="oe_inline"/>
+                        <button
+                            type="action"
+                            name="%(action_send_sms_wizard)d"
+                            class="btn btn-sm btn-link mb4 fa fa-envelope"
+                            aria-label="Send SMS"
+                            title="Send SMS"
+                            attrs="{'invisible':[('mobile', '=', False)]}"
+                            context="{'default_phone': mobile, 'default_partner_id': id}"
+                        />
+                    </div>
+                </field>
+            </field>
+        </record>
+	</data>
+</openerp>

@@ -1,0 +1,102 @@
+<openerp>
+	<data>
+		<!-- Product Template Tree view -->
+		<record id="product_template_tree_view" model="ir.ui.view">
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_tree_view"/>
+			<field name="arch" type="xml">
+				<!-- Product Sequence -->
+				<field name="name" position="before">
+					<field name="product_sequence"/> 
+				</field>
+			</field>
+		</record>
+
+		<!-- Product Template Kanban View -->
+		<record model = 'ir.ui.view' id = 'product_template_autolamps_form_view'>
+			<field name = 'name'>Product Template</field>
+			<field name = 'model'>product.template</field>
+			<field name = 'inherit_id' ref = 'product.product_template_only_form_view'/>
+			<field name = 'arch' type = 'xml'>
+				<xpath expr="//div[@name='buttons']" position="inside">
+					<button class="oe_inline oe_stat_button" name="action_view_product_history" type="object" icon="fa-external-link" string="Product History"/>
+                       
+				</xpath>
+				<xpath expr="//field[@name='default_code']" position="after">
+					<field name = 'supplier_product_code'/>
+					<field name = 'old_item_identifier'/>
+					<field name = 'measurements'/>
+				</xpath>
+
+				<!-- Product Sequence -->
+				<field name="list_price" position="after">
+					<field name="product_sequence" readonly="1"/>
+				</field>
+			</field>
+		</record>
+
+		<!-- Product Template Kanban View -->
+		<record model='ir.ui.view' id='product_template_kanban_view_autolamps'>
+			<field name='name'>Product.template.product.kanban.autolamps</field>
+			<field name='model'>product.template</field>
+			<field name='inherit_id' ref='product.product_template_kanban_view'/>
+			<field name='arch' type='xml'>
+				<ul position="inside">
+                    <li>Sequence:<field name="product_sequence"/></li>
+                </ul>
+			</field>
+		</record>
+
+		<!-- product.product inherit form view -->
+		<record id="product_normal_form_view" model="ir.ui.view">
+			<field name="name">product.product.inherit.view.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//div[@name='buttons']" position="inside">
+					<button class="oe_inline oe_stat_button" name="action_view_product_history" type="object" icon="fa-external-link" string="Product History"/>
+				</xpath>
+
+				<!-- Product Sequence -->
+				<field name="lst_price" position="after">
+					<field name="product_sequence" readonly="1"/>
+				</field>
+			</field>
+		</record>
+
+		<!-- Product Template: Tree view -->
+		<record id="product_product_tree_view" model="ir.ui.view">
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_product_tree_view"/>
+			<field name="arch" type="xml">
+				<!-- Product Sequence -->
+				<field name="default_code" position="before">
+					<field name="product_sequence"/>
+				</field>
+			</field>
+		</record>
+
+		<record model = 'ir.ui.view' id = 'product_template_supplier_code_search'>
+			<field name = 'name'>Product Template Supplier Code Search</field>
+			<field name = 'model'>product.template</field>
+			<field name = 'inherit_id' ref = 'product.product_template_search_view'/>
+			<field name = 'arch' type = 'xml'>
+				<xpath expr="//field[@name='name']" position="replace">
+					<field name="name" string="Product" filter_domain="['|','|','|','|','|',('default_code','ilike',self),('name','ilike',self),('supplier_product_code','ilike',self),('old_item_identifier','ilike',self),('measurements','ilike',self),('product_sequence','ilike',self)]"/>
+					<field name='product_sequence'/>
+					<field name="website_sequence" string = "Product External ID"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='product_search_form_view'>
+			<field name='model'>product.product</field>
+			<field name='inherit_id' ref ='product.product_search_form_view'/>
+			<field name='arch' type ='xml'>
+				<xpath expr="//field[@name='name']" position="replace">
+					<field name="name" string="Product" filter_domain="['|','|',('default_code','ilike',self),('name','ilike',self),('product_sequence','ilike',self)]"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</openerp>

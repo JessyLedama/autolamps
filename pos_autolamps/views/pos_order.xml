@@ -1,0 +1,53 @@
+<openerp>
+	<data>
+		<!-- POS Order -->
+		<record id="view_pos_order_filter" model="ir.ui.view">
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+            <field name="arch" type="xml">
+                <field name="session_id" position="after">
+                    <field name="partner_id"/>
+                </field>
+				<xpath expr="//filter[@string='Order Month']" position="after">
+					<filter name="cash_refund" string="Refunds" domain="[('original_order_id', '!=', False)]"/>
+				</xpath>
+
+				<field name="name" position="replace">
+					<field name="name" filter_domain="['|',('name','ilike',self),('pos_reference','ilike',self)]"/>
+				</field>
+            </field>
+        </record>
+
+		<record model = 'ir.ui.view' id = 'view_pos_pos_form_autolamps'>
+			<field name = 'name'>pos.order.autolamps</field>
+			<field name = 'model'>pos.order</field>
+			<field name = 'inherit_id' ref = 'point_of_sale.view_pos_pos_form'/>
+			<field name = 'arch' type = 'xml'>
+				<button name = 'refund' position = "attributes">
+					<attribute name='groups'>autolamps_base.group_pos_return_products</attribute>
+				</button>
+
+				<field name="state" position="before">
+					<button string="Print Picking" name="action_print_picking" type="object" class="oe_highlight"/>
+				</field>
+			</field>
+		</record>
+
+		<!-- Add Refunds Menu -->
+		<record id="action_pos_order_refunds" model="ir.actions.act_window">
+            <field name="name">Cash Refunds - PoS Orders</field>
+            <field name="res_model">pos.order</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+			<field name="domain">[('original_order_id', '!=', False)]</field>
+        </record>
+
+		<menuitem
+			groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"
+			action="action_pos_order_refunds"
+			id="menu_pos_order_refunds"
+			name="Refunds"
+			parent="point_of_sale.menu_point_of_sale"
+			sequence="5"/>
+	</data>
+</openerp>

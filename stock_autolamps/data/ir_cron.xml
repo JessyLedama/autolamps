@@ -1,0 +1,17 @@
+<openerp>
+	<data noupdate="1">
+		<!-- Procurement Orders: Remove Cancel PO-->
+        <record forcecreate="True" id="cron_delete_cancelled_procurement_orders" model="ir.cron">
+            <field name="name">Procurement Orders: Delete Cancelled</field>
+            <field name="active" eval="False"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field name="model">procurement.order</field>
+            <field name="function">remove_cancelled_procurement_orders</field>
+            <field name="args">(100,7)</field>
+        </record>
+	</data>
+</openerp>

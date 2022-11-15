@@ -1,0 +1,53 @@
+<openerp>
+	<data>
+		<record model = 'ir.ui.view' id = 'post_dated_cheques_partner_view'>
+			<field name = 'model'>res.partner</field>
+			<field name = 'inherit_id' ref = 'account_followup.view_partner_inherit_followup_form'/>
+			<field name = 'arch' type = 'xml'>
+				<xpath expr="//page[@name='followup_tab']" position="inside">
+					
+					<separator string = "Post Dated Cheques"/>
+					
+					<p class="oe_grey">
+                        You can key in a list of post dated cheques delivered by the customer for future deposit
+					</p>
+					<field name = 'pd_cheque_ids'/>
+					<group class="oe_subtotal_footer oe_right">
+						<field name="pd_cheques_amount"/>
+					</group>
+					<div class="oe_clear"/>
+					
+				</xpath>
+			</field>
+		</record>
+
+		<record model = 'ir.ui.view' id = 'post_dated_cheques_tree'>
+			<field name = 'model'>post.dated.cheques</field>
+			<field name = 'arch' type = 'xml'>
+				<tree colors = "black: date_due &gt; current_date and banked == False; red: date_due &lt; current_date and banked == False; green: banked == True" editable = "bottom">
+					<field name = 'date_received'/>
+					<field name = 'date_due'/>
+					<field name = 'cheque_number'/>
+					<field name = 'amount'/>
+					<field name = 'comment'/>
+					<field name = 'banked'/>
+				</tree>
+			</field>
+		</record>
+
+		<record model = 'ir.ui.view' id = 'post_dated_cheques_reminder_lines_tree'>
+			<field name = 'name'>Post Dated Cheques List</field>
+			<field name = 'model'>post.dated.cheque.reminder.lines</field>
+			<field name = 'arch' type = 'xml'>
+				<tree colors = "black: date_due &gt; current_date and banked == False; red: date_due &lt; current_date and banked == False; green: banked == True">
+					<field name = 'partner_id'/>
+					<field name = 'date_received'/>
+					<field name = 'date_due'/>
+					<field name = 'amount'/>
+					<field name = 'comment'/>
+					<field name = 'banked'/>
+				</tree>
+			</field>
+		</record>
+	</data>
+</openerp>

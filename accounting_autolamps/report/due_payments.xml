@@ -1,0 +1,116 @@
+<openerp>
+	<data>
+		<template id="due_payments_pd_cheques_followup" inherit_id="account.report_overdue_document">
+			<xpath expr="//div[@class='page']" position="inside">
+				<div class = 'row'>
+					<div class='col-xs-5'>
+						<h3>Post Dated Cheques Delivered</h3>
+					</div>
+				</div>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Date Received</th>
+							<th>Date Due</th>
+							<th>Cheque Number</th>
+							<th class="text-right">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t t-set="runBal" t-value="0"/>
+						<t t-foreach="o.pd_cheque_ids" t-as="pd">
+							<t t-if="pd.banked==False">
+								<tr>
+									<td>
+										<span t-field="pd.date_received"/>
+									</td>
+									<td>
+										<span t-field="pd.date_due"/>
+									</td>
+									<td>
+										<span t-field="pd.cheque_number"/>
+									</td>
+									<td class="text-right">
+										<span t-field="pd.amount"/>
+									</td>
+									<t t-set="runBal" t-value="runBal+pd.amount"/>
+								</tr>
+							</t>
+						</t>
+						<tr>
+		                    <td colspan="1"/>
+		                    <td><strong>Total :</strong></td>
+		                    <td></td>
+		                    <td class="text-right">
+		                    	<strong t-esc="'{0:,.2f}'.format(int(runBal))"/>
+		                    	<!-- <span t-field="o.pd_cheques_amount"/> -->
+		                    </td>
+		                </tr>
+					</tbody>
+				</table>
+
+				<p>
+	                Total Pd Cheques:
+	                <b><span t-field="o.pd_cheques_amount"/></b>
+	            </p>
+			</xpath>
+		</template>
+
+		<template id="account_followup_pd_cheques_followup" inherit_id="account_followup.report_followup">
+			<xpath expr="//div[@class='page']" position="inside">
+				<t t-set ="p" t-value = "o.partner_id"/> 
+				<div class = 'row'>
+					<div class='col-xs-5'>
+						<h3>Post Dated Cheques Delivered</h3>
+					</div>
+				</div>
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Date Received</th>
+							<th>Date Due</th>
+							<th>Cheque No.</th>
+							<th class="text-right">Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<t t-set="runBal" t-value="0"/>
+						<t t-foreach="p.pd_cheque_ids" t-as="pd">
+							<t t-if="pd.banked==False">
+							<tr>
+								<td>
+									<span t-field="pd.date_received"/>
+								</td>
+								<td>
+									<span t-field="pd.date_due"/>
+								</td>
+								<td>
+									<span t-field="pd.cheque_number"/>
+								</td>
+								<td class="text-right">
+									<span t-field="pd.amount"/>
+								</td>
+								<t t-set="runBal" t-value="runBal+pd.amount"/>
+							</tr>
+							</t>
+						</t>
+						<tr>
+		                    <td colspan="1"/>
+		                    <td><strong>Total :</strong></td>
+		                    <td></td>
+		                    <td class="text-right">
+		                    	<strong t-esc="'{0:,.2f}'.format(int(runBal))"/>
+		                    	<!-- <span t-field="p.pd_cheques_amount"/> -->
+		                    </td>
+		                </tr>
+					</tbody>
+				</table>
+
+				<p>
+	                Total Pd Cheques:
+	                <b><span t-field="p.pd_cheques_amount"/></b>
+	            </p>
+			</xpath>
+		</template>
+	</data>
+</openerp>

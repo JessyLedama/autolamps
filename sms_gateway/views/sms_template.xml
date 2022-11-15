@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+      <!--SMS Template form view-->
+      <record id="sms_template_form_view" model="ir.ui.view">
+          <field name="name">sms.template.form</field>
+          <field name="model">sms.template</field>
+          <field name="arch" type="xml">
+              <form string="SMS Send">
+                <group>
+                    <field name="name"/>
+                </group>
+                <separator/>
+                <group>
+                  <group>
+                      <field name="gateway_id"/>
+                      <field name="model_id" options="{'no_create': True}"/>
+                  </group>
+                </group>
+                <separator/>
+                <h2>Body</h2>
+                  <field name="sms_html"/>
+              </form>
+          </field>
+      </record>
+
+      <!--SMS Template list view-->
+      <record id="send_sms_tree_view" model="ir.ui.view">
+          <field name="name">sms.template.tree</field>
+          <field name="model">sms.template</field>
+          <field name="arch" type="xml">
+              <tree string="SMS Send">
+                  <field name="name"/>
+                  <field name="model_id"/>
+                  <field name="gateway_id"/>
+              </tree>
+          </field>
+      </record>
+
+      <record id="action_send_sms" model="ir.actions.act_window">
+        <field name="name">SMS Template</field>
+        <field name="res_model">sms.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" eval="False"/>
+        <field name="context">{}</field>
+        <field name="help">SMS Template</field>
+      </record>
+      <menuitem name="SMS Gateway" id="main_menu_sms_gateway" parent="base.menu_custom" sequence="6" />
+      <menuitem action="action_send_sms" id="menu_action_send_sms" parent="main_menu_sms_gateway" sequence="5" />
+  </data>
+</openerp>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_partner_form_commission" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="sale_commission.view_partner_form_agent"/>
+        <field name="arch" type="xml">
+            <field name="commission" position="replace">
+                <field name="commission"/>
+            </field>
+        </field>
+    </record>
+    </data>
+</openerp>

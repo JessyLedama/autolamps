@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_ledger_summary">
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <style type="text/css">
+                            div.customer-info {
+                                position: absolute;
+                                left: 75%;
+                                width: 300px;
+                                top: -3px;
+                                border-bottom: 1px solid black;
+                            }
+                        </style>
+                        <div class="customer-info">
+                            Document: Customer Statement<br/>
+                            Date: <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%A,  %B %d, %Y')"/><br/>
+                            To: <span t-esc="o.partner_id.name"/> <br/>
+                            <t t-if="o.filter_date">
+                                From: <span t-esc="o.get_from_to()"/>
+                            </t>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <table class="table table-condensed" t-if="o.get_move_lines()">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Due</th>
+                                    <th>Transaction</th>
+                                    <th class="text-right">Amount</th>
+                                    <th class="text-right">Balance</th>
+                                </tr>
+                            </thead>
+                            <tr t-foreach="o.get_move_lines()" t-as="line">
+                                <td>
+                                    <span t-esc="line['date']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['due']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['transaction']"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line['amount'])"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="'{0:,.2f}'.format(line['balance'])"/>
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                        <t t-set="amount_due" t-value="o.get_amount_due()"/>
+                        <table class="table table-bordered" style="page-break-inside: avoid;">
+                            <thead>
+                                <tr>
+                                    <th>Due</th>
+                                    <th>1-30 Days</th>
+                                    <th>31-60 Days</th>
+                                    <th>61-90 Days</th>
+                                    <th>Over 90 Days</th>
+                                    <th>Total Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <t t-esc="amount_due['current']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="amount_due['1_30']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="amount_due['31_60']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="amount_due['61_90']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="amount_due['over_90']"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="'{0:,.2f}'.format(reduce(lambda x, y: x + y['amount'], o.get_move_lines(), 0))" />
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+
+                        <!-- PD Cheques -->
+                        <t t-if="o.partner_id.pd_cheque_ids">
+                            <div class = 'row'>
+                                <div class='col-xs-5'>
+                                    <h6>Post Dated Cheques Delivered</h6>
+                                </div>
+                            </div>
+                            <table class="table table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>Date Received</th>
+                                        <th>Date Due</th>
+                                        <th>Cheque Number</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="runBal" t-value="0"/>
+                                    <t t-foreach="o.partner_id.pd_cheque_ids" t-as="pd">
+                                        <t t-if="pd.banked==False">
+                                            <tr>
+                                                <td>
+                                                    <span t-field="pd.date_received"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="pd.date_due"/>
+                                                </td>
+                                                <td>
+                                                    <span t-field="pd.cheque_number"/>
+                                                </td>
+                                                <td class="text-right">
+                                                    <span t-field="pd.amount"/>
+                                                </td>
+                                                <t t-set="runBal" t-value="runBal+pd.amount"/>
+                                            </tr>
+                                        </t>
+                                    </t>
+                                    <tr>
+                                        <td colspan="1"/>
+                                        <td><strong>Total :</strong></td>
+                                        <td></td>
+                                        <td class="text-right">
+                                            <strong t-esc="'{0:,.2f}'.format(int(runBal))"/>
+                                            <!-- <span t-field="o.pd_cheques_amount"/> -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <p>
+                                Total Pd Cheques:
+                                <b>KSh. <span t-field="o.partner_id.pd_cheques_amount"/></b>
+                            </p>
+                        </t>
+
+                    </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <!-- Report Action -->
+        <report
+            id="action_report_ledger_summary"
+            model="partner.ledger.summary.wizard"
+            string="Ledger Summary"
+            report_type="qweb-pdf"
+            name="accounting_autolamps.report_ledger_summary"
+            file="accounting_autolamps.report_ledger_summary"
+        />
+    </data>
+</openerp>

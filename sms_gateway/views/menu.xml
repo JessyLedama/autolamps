@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <!-- Extra Menus -->
+    <menuitem
+        id="menu_main_sms_invoice"
+        name="SMS Notifications"
+        parent="mail.mail_feeds_main"
+        sequence="25" />
+
+    <menuitem
+        id="menu_action_invoice_sms_history"
+        action="action_sms_history"
+        parent="menu_main_sms_invoice"
+        sequence="1" />
+
+  </data>
+</openerp>

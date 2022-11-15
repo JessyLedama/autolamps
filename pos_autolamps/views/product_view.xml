@@ -1,0 +1,59 @@
+<openerp>
+	<data>
+
+		<record model='ir.actions.act_window' id='act_pos_order_lines'>
+			<field name='name'>POS Order Lines</field>
+			<field name='res_model'>pos.order.line</field>
+			<field name='view_type'>form</field>
+			<field name='view_mode'>tree,form</field>
+		</record>
+
+		<record model='ir.ui.view' id='product_template_pos_form_view'>
+			<field name='name'>product.template.pos.form</field>
+			<field name='model'>product.template</field>
+			<field name='inherit_id' ref='product.product_template_only_form_view'/>
+			<field name='arch' type='xml'>
+				<div name='buttons' position='inside'>
+					<button class="oe_inline oe_stat_button" name="action_view_pos_sales" type="object" icon="fa-strikethrough" string="POS Sales"/>
+				</div>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='product_pos_normal_form_view'>
+			<field name='name'>product.product.pos.form</field>
+			<field name='model'>product.product</field>
+			<field name='inherit_id' ref='product.product_normal_form_view'/>
+			<field name='arch' type='xml'>
+				<div name='buttons' position='inside'>
+					<button class="oe_inline oe_stat_button" name="action_view_pos_sales" type="object" icon="fa-strikethrough" string="POS Sales"/>
+				</div>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='pos_order_lines_tree'>
+			<field name='name'>pos.order.lines</field>
+			<field name='model'>pos.order.line</field>
+			<field name='arch' type='xml'>
+				<tree>
+					<field name='order_id'/>
+					<field name='product_id'/>
+					<field name='qty'/>
+					<field name='price_unit'/>
+					<field name='price_subtotal'/>
+					<field name='price_subtotal_incl'/>
+				</tree>
+			</field>
+		</record>
+
+		<record model='ir.ui.view' id='pos_order_lines_search'>
+			<field name='name'>pos.order.lines.search</field>
+			<field name='model'>pos.order.line</field>
+			<field name='arch' type='xml'>
+				<search>
+					<field name='product_id'/>
+					<field name='order_id'/>
+				</search>
+			</field>
+		</record>
+	</data>
+</openerp>

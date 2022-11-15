@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+    <record model="ir.module.category" id="module_category_autolamps">
+        <field name="name">Autolamps</field>
+        <field name="sequence">102</field>
+    </record>
+
+    <record id="group_edit_prices" model="res.groups">
+        <field name="name">Can Edit Prices</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+    </record>
+
+    <record id="group_edit_credit_limit" model="res.groups">
+        <field name="name">Can Edit Credit Limit</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+    </record>
+
+    <record id="group_create_products" model="res.groups">
+        <field name="name">Can Create Products</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+    </record>
+
+    <record id="group_edit_sale_pricelist" model="res.groups">
+        <field name="name">Can Edit Sale Order Pricelist</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+    </record>
+
+    <record id = 'group_warehouse_reverse_transfer' model = 'res.groups'>
+        <field name = 'name'>Can Reverse Warehouse Transfer</field>
+        <field name = 'category_id' ref = 'module_category_autolamps'/>
+    </record>
+
+    <record id="group_warehouse_admin" model="res.groups">
+        <field name="name">Is Warehouse Admin</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+    </record>
+
+    <record id="group_autolamps_manager" model="res.groups">
+        <field name="name">Manager</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+    </record>
+
+    <record id="group_autolamps_admin" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="module_category_autolamps"/>
+        <field name="implied_ids" eval="[(4, ref('group_autolamps_manager'))]"/>
+    </record>
+
+    <record id="group_pos_return_products" model="res.groups">
+        <field name = "name">Can Return Products on POS</field>
+        <field name = 'category_id' ref="module_category_autolamps"/>
+    </record>
+
+    <record id="group_contact_creation" model="res.groups">
+        <field name="name">Can Create Contacts</field>
+        <field name='category_id' ref="module_category_autolamps"/>
+    </record>
+
+    <record id="base.group_system" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('autolamps_base.group_autolamps_admin'))]"/>
+    </record>
+
+    <record id="base.access_res_partner_group_partner_manager" model="ir.model.access">
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+</data>
+</openerp>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_company_inherit_form">
+            <field name="inherit_id" ref="account.view_company_inherit_form"/>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <field name="overdue_msg" position="after">
+                    <separator string="Overdue Automated SMS Reminders" colspan="4"/>
+                    <group>
+                        <field name="overdue_payment_limit"/>
+                        <field name="reminder_template_id" options="{'no_create': True}"/>
+                    </group>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

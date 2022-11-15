@@ -1,0 +1,118 @@
+
+<openerp>
+    <data>
+        <!-- account.invoice.line.agent tree view -->
+        <record id="account_invoice_line_agent_view_tree" model="ir.ui.view">
+        <field name="name">account.invoice.line.agent.view.tree</field>
+        <field name="model">account.invoice.line.agent</field>
+        <field name="arch" type="xml">
+            <!-- TODO: no_create, no_edit -->
+            <tree>
+                <field name="invoice" />
+                <field name="invoice_date"/>
+                <field name="agent" />
+                <field name="product" />
+                <field name="commission"/>
+                <field name="amount"/>
+                <field name="total_amount"/>
+            </tree>
+        </field>
+        </record>
+
+        <!-- account.invoice.line.agent form view -->
+        <record id="account_invoice_line_agent_view_form" model="ir.ui.view">
+        <field name="name">account.invoice.line.agent.view.form</field>
+        <field name="model">account.invoice.line.agent</field>
+        <field name="arch" type="xml">
+            <!-- TODO: no_create, no_edit -->
+            <form string="Invoice Line Agent">
+            <sheet>
+                <div>
+                <h1><field name="display_name" /></h1>
+                </div>
+                <group>
+                <group>
+                    <!-- TODO: no_open, etc -->
+                    <field name="invoice" />
+                    <field name="product" />
+                    <field name="agent"/>
+                    <field name="commission"/>
+                </group>
+                <group>
+                    <field name="invoice_date" />
+                    <field name="total_amount"/>
+                    <field name="amount"/>
+                </group>
+                </group>
+            </sheet>
+            </form>
+        </field>
+        </record>
+
+        <!-- account.invoice.line.agent search view -->
+        <record id="account_invoice_line_agent_view_search" model="ir.ui.view">
+        <field name="name">account.invoice.line.agent.view.search</field>
+        <field name="model">account.invoice.line.agent</field>
+        <field name="arch" type="xml">
+            <search string="Sale Order Line Agent Search">
+            <field name="invoice"/>
+            <field name="product"/>
+            <field name="agent"/>
+            <field name="commission"/>
+            <field name="invoice_date"/>
+            <field name="amount"/>
+            <field name="total_amount"/>
+            <filter string="My Sale Agent Line" domain="[('user_id','=',uid)]" name="my_sale_agent_line_filter"/>
+            <separator/>
+            <group expand="0" string="Group By">
+                <filter name="group_by_agent" string="Agent" domain="[]" context="{'group_by':'agent'}"/>
+                <filter name="group_by_commission" string="Commission" domain="[]" context="{'group_by':'commission'}"/>
+                <filter name="group_by_invoice" string="Invoice" domain="[]" context="{'group_by':'invoice'}"/>
+                <filter name="group_by_product" string="Product" domain="[]" context="{'group_by':'product'}"/>
+                <filter name="group_by_invoice_date" string="Invocie date" domain="[]" context="{'group_by':'invoice_date'}"/>
+            </group>
+            </search>
+        </field>
+        </record>
+
+        <!-- account.invoice smart button inherit form view -->
+        <record id="account_invoice_approvals_form" model="ir.ui.view">
+            <field name="name">account.invoice.inherit.view.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/h1" position="after">
+					<div class="oe_right oe_button_box" name="buttons">
+						<button name="action_view_agent_lines" class="oe_inline oe_stat_button" type="object" string="Agent Commissions" icon="fa-th-list" attrs="{'invisible': [('commission_total', '=', 0)]}" groups='account.group_account_invoice, base.group_sale_salesman'>
+							<field name="commission_total" widget="statinfo"/>
+						</button> 
+					</div>
+				</xpath>
+                <xpath expr="//field[@name='date_due']" position="after">
+                    <field name="date_paid"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- commission information accessible to specific groups -->
+        <record model='ir.ui.view' id='account_invoice_commission_form'>
+            <field name='name'>account.invoice.commission.inherit</field>
+            <field name='model'>account.invoice</field>
+            <field name='inherit_id' ref='sale_commission.invoice_form_agent'/>
+            <field name='arch' type='xml'>
+                <field name='commission_free' position='attributes'>
+                    <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+                </field>
+
+                <field name='agents' position='attributes'>
+                    <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+                </field>
+
+                <field name='commission_total' position='attributes'>
+                    <attribute name='groups'>account.group_account_invoice, base.group_sale_salesman</attribute>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
+ 

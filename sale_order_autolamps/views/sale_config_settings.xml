@@ -1,0 +1,23 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_sales_config_settings">
+			<field name="model">sale.config.settings</field>
+			<field name="inherit_id" ref="sale.view_sales_config"/>
+            <field name="arch" type="xml">
+            	 <data>
+	            <div name="config_sale" position="before">
+                    <separator string="Automatic Workflow"/>
+                    <group>
+                        <label for="id" string="Default Sale Order Workflow"/>
+                        <div>
+                            <div>
+                                <field name="default_workflow_id" class="oe_inline" options="{'no_create': True}"/>
+                            </div>
+                        </div>
+                    </group>
+	            </div>
+                </data>
+            </field>
+		</record>
+	</data>
+</openerp>

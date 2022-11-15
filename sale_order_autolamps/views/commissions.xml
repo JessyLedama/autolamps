@@ -1,0 +1,24 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="product_commission_tree_autolamps">
+			<field name="name">product.commission</field>
+			<field name="model">product.product.agent</field>
+			<field name="arch" type="xml">
+				<tree string="Product Commissions">
+					<field name="product_id" string="Product"/>
+					<field name="commission"/>
+					<field name="agent"/>					
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="product_commissions_action">
+			<field name="name">Product Commissions</field>
+			<field name="res_model">product.product.agent</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Product Commissions" id="product_commissions_menu" parent="sale_commission.menu_sale_commissions_conf" sequence="90" action="product_commissions_action"/>
+	</data>
+</openerp>

@@ -1,0 +1,44 @@
+<openerp>
+    <data>
+        <record id="agent_commission_report_view" model="ir.ui.view">
+            <field name="name">agent.commission.report.wizard</field>
+            <field name="model">agent.commission.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Print Agent Commissions Report">
+                    <group>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="agent_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="date_to" />
+                        </group>
+                    </group>
+                    <footer>
+                    	<button name="action_print_reports" string="Print Report" type="object"/>
+                    </footer>
+                </form>
+            </field>     
+        </record>
+
+        <record id="action_agent_commission_report" model="ir.actions.act_window">
+            <field name="name">Agent Commission Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">agent.commission.report.wizard</field>
+            <field name="src_model">res.partner</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="action_agent_commission_report_values">
+            <field name="name">Agent Commissions Report</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_agent_commission_report'))"/>
+            <field name="key">action</field>
+            <field name="model" eval="'res.partner'"/>
+        </record>
+    </data>
+</openerp>
+

@@ -1,0 +1,42 @@
+<openerp>
+    <data>
+        <record id="sale_sourcing_report_view" model="ir.ui.view">
+            <field name="name">sale.sourcing.report.wizard</field>
+            <field name="model">sale.sourcing.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Print Sale Sourcing Report">
+                    <group>
+                        <group>
+                            <field name="warehouse_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                        </group>
+                    </group>
+                    <footer>
+                    	<button name="action_print_reports" string="Print Report" type="object"/>
+                    </footer>
+                </form>
+            </field>     
+        </record>
+
+        <record id="action_sale_sourcing_report" model="ir.actions.act_window">
+            <field name="name">Sale Sourcing Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.sourcing.report.wizard</field>
+            <field name="src_model">sale.order</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.values" id="action_sale_sourcing_report_values">
+            <field name="name">Sale Sourcing Report</field>
+            <field name="model_id" ref="sale.model_sale_order" />
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_sale_sourcing_report'))"/>
+            <field name="key">action</field>
+            <field name="model" eval="'sale.order'"/>
+        </record>
+    </data>
+</openerp>
+

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+  <data>
+    <record id="view_sms_history_form" model="ir.ui.view">
+        <field name="name">sms.history.form.view</field>
+        <field name="model">sms.history</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="resend_sms" states='pending' string="Resend SMS" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group name="top">
+                        <group name="left">
+                            <field name="partner_id" readonly="1"/>
+                            <field name="name" readonly="1"/>
+                            <field name="phone" attrs="{'readonly': [('state', '=', 'sent')]}"/>
+                             <field name="provider_id" readonly="1"/>
+                        </group>
+                        <group name="right">
+                            <field name="date" readonly="1"/>
+                            <field name="message" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="failure_reason" readonly="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+      </record>
+
+    <record id="view_sms_history_tree" model="ir.ui.view">
+        <field name="name">sms.history.tree.view</field>
+        <field name="model">sms.history</field>
+        <field name="arch" type="xml">
+            <tree string="SMS History">
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="date"/>
+                <field name="message"/>
+                <field name="provider_id"/>
+                <field name="state"/>
+                <button states="pending,fail" name="resend_sms"
+                type="object" icon="gtk-redo" string="Resend SMS if it failed or pending"/>
+            </tree>
+        </field>
+      </record>
+
+    <record id="action_sms_history" model="ir.actions.act_window">
+      <field name="name">SMS History</field>
+      <field name="res_model">sms.history</field>
+      <field name="view_type">form</field>
+      <field name="view_mode">tree,form</field>
+      <field name="search_view_id" eval="False"/>
+      <field name="context">{}</field>
+      <field name="help">SMS History</field>
+    </record>
+
+    <menuitem action="action_sms_history" id="menu_action_sms_track" parent="main_menu_sms_gateway" sequence="10" />
+  </data>
+</openerp>

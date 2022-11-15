@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="view_account_followup_followup_line_form_sms" model="ir.ui.view">
+            <field name="model">account_followup.followup.line</field>
+            <field name="inherit_id" ref="account_followup.view_account_followup_followup_line_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_inline']" position="after">
+                    <field name="send_sms"/>
+                    <label for="send_sms"/>
+                </xpath>
+
+                <xpath expr="//group[@string='Send an Email']" position="before">
+                    <group name="send_sms" string="Send SMS" attrs="{'invisible': [('send_sms', '=', False)]}">
+                        <field name="sms_content" nolabel="1" colspan="2" attrs="{'required': [('send_sms', '=', True)]}" placeholder="Dear Sir/Madam, Please pay your overdue payments by tomorrow!"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="base.menu_sales_followup" parent="base.menu_base_partner" name="Payment Follow-up" groups="account.group_account_invoice,base.group_sale_salesman" sequence="2"/>
+
+        <menuitem id="account_followup.menu_sale_followup" parent="base.menu_sales_followup" sequence="10" 
+                  action="account_followup.action_customer_my_followup"  groups="account.group_account_invoice,base.group_sale_salesman"/>
+    </data>
+</openerp>

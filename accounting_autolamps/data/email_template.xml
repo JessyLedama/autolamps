@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Payment Receipt -->
+        <record id="email_template_payment_receipt" model="email.template">
+            <field name="name">Send Payment Receipts</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="subject">Payment Receipt ${(object.number)}</field>
+            <field name="email_to">${object.partner_id.email}</field>
+            <field name="lang">${(object.partner_id.lang)}</field>
+            <field name="model_id" ref="account_voucher.model_account_voucher"/>
+            <field name="report_template" ref="customer_payment_receipt"/>
+            <field name="report_name">Payment - ${(object.partner_id.name)}</field>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+
+    <p>Dear ${object.partner_id.name},</p>
+    <p>
+        Find attached payment receipt of Ksh. ${object.amount} for ${object.reference}.
+    </p>
+
+    <p>
+        For any further inquiries contact the administrator.
+    </p>
+    <br/>
+    Sincerely,
+    <br/>
+    <br/>
+    ${(user.name or object.user_id.name)}
+    <br/>
+    <br/>
+    Autolamps
+    <br/>
+    <br/>
+    </div>
+            ]]></field>
+        </record>
+
+
+        <!-- PD Cheque Reminders -->
+        <record id="email_template_pd_cheque_reminder" model="email.template">
+            <field name="name">Send Post Dated Cheque Reminders</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="subject">Post Dated Cheque Reminder</field>
+            <field name="email_to">${object.company_id.email}</field>
+            <field name="lang">${(object.company_id.lang)}</field>
+            <field name="model_id" ref="model_post_dated_cheque_reminders"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucida Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+
+    <p>Dear ${object.company_id.name},</p>
+    <p>
+        See list of outstanding post dated cheques pending banking
+    </p>
+
+    <table>
+
+        <tbody>
+            <tr>
+                <th style="width:135px">Customer Name</th>
+                <th style="width: 85px;">Amount</td>
+                
+            </tr>
+            % for row in object.reminder_ids:
+            <tr>
+                <td> ${row.partner_id.name}</td>
+                <td style="text-align: center;">${row.amount or ''}</td>
+                
+            </tr>
+            %endfor
+        <tbody>
+
+    <table>
+
+    <br/>
+    <br/>
+    <p>
+        For any further inquiries contact the administrator.
+    </p>
+    <br/>
+    Sincerely,
+    <br/>
+    <br/>
+    ${(user.name or object.company_id.name)}
+    <br/>
+    <br/>
+    Autolamps
+    <br/>
+    <br/>
+    </div>
+            ]]>
+                
+            </field>
+        </record>
+
+    </data>
+</openerp>

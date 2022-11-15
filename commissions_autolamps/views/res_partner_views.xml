@@ -1,0 +1,43 @@
+<openerp>
+    <data>
+        <!-- res.partner inherit form view -->
+        <record id="view_partner_form" model="ir.ui.view">
+            <field name="name">res.partner.inherit.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button string="Sale Commissions" name="action_view_sale_agent_lines" type="object" 
+                    class="oe_stat_button" icon="fa-th-list" attrs="{'invisible': [('agent', '=', False)]}">
+                    </button>
+                    <button string="Invoice Commissions" name="action_view_invoice_agent_lines" type="object" 
+                    class="oe_stat_button" icon="fa-th-list" attrs="{'invisible': [('agent', '=', False)]}">
+                    </button>
+                    <button string="Agent Settlements" name="action_view_settlements" type="object" 
+                    class="oe_stat_button" icon="fa-th-list" attrs="{'invisible': [('agent', '=', False)]}">
+                    </button>
+                    <button string="Agent Invoices" name="action_view_agent_invoices" type="object" 
+                    class="oe_stat_button" icon="fa-th-list" attrs="{'invisible': [('agent', '=', False)]}">
+                    </button>
+                    <!-- <button string="Commissions Report" name="%(commissions_autolamps.action_agent_commission_report)d" type="action" 
+                    class="oe_stat_button" icon="fa-external-link" attrs="{'invisible': [('agent', '=', False)]}">
+                    </button> -->
+                </xpath>
+            </field>
+        </record>
+
+        <!-- res.partner inherit form view -->
+        <record id="view_partner_form_agent" model="ir.ui.view">
+            <field name="name">res.partner.inherit.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="sale_commission.view_partner_form_agent"/>
+            <field name="arch" type="xml">
+                <!-- Add your xpath here -->
+                <xpath expr="//field[@name='commission']" position="after">
+                    <field name="target"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

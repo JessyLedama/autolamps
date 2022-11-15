@@ -1,0 +1,98 @@
+<openerp>
+	<data>
+        <!-- Custom Footer -->
+    <template id="custom_footer">
+        <style>
+            #bottomtable {
+                font-size: 11px;
+                margin-right: 5px;
+                margin-bottom: 50px;
+            }
+            .center{
+                text-align: center;
+            }
+        </style>
+        <table id="bottomtable">
+            <h3 class="center">PAY BILL NO: 182754</h3>
+            <p t-field="o.esd_serial"/>
+            <strong>PAYMENT ACCEPTED VIA PAYBILL OR CHEQUE ONLY. "CASH PAYMENT" TO OUR STAFF NOT ACCEPTED</strong>
+            <tr>
+                <td width="50%">
+                    1. All prices are inclusive of VAT.
+                </td>
+                <td width="50%">
+                    4. Payments is strictly on acceptance of delivery of goods unless otherwise agreed in writing.
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    2. Goods will remain property of Autolamps until full payment is done.
+                </td>
+                <td width="50%">
+                    5. Interest of 3% per month will be charged on all overdue payment.
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    3. No responsibility is accepted for shortage of damage of goods in transit.
+                </td>
+                <td width="50%">
+                    6. Failure of payment being received, Autolamps has the right to reposses the supplied goods without notice.
+                </td>
+            </tr>
+        </table>
+    </template>
+
+   <template id="external_layout_header_autolamps" inherit_id="report.external_layout_header">
+       <xpath expr="//div[@class='header']//div[3]" position="after">
+           <div class="row">
+               <div class="col-xs-5">
+                   <span t-if="company.company_registry">PIN No.
+                       <span t-field="company.company_registry"/>
+                   </span>
+               </div>
+           </div>
+       </xpath>
+   </template>
+
+    <template id="report_invoice_document_autolamps" inherit_id="account.report_invoice_document">
+
+        <!-- Add Customer PIN -->
+        <xpath expr="//span[@t-if='o.partner_id.vat']" position="replace">
+            <span t-if="o.partner_id.pin_number">PIN: <span t-field="o.partner_id.pin_number"/></span>
+        </xpath>
+
+        <xpath expr="//t[@t-call='report.external_layout']" position="inside">
+            <t t-set="customfooter" t-value="True" />
+        </xpath>
+
+        <!-- Add Phone Number to Customer Address -->
+        <xpath expr="//address[@t-field='o.partner_id']" position="replace">
+            <address t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}' />
+        </xpath>
+
+        <!-- Add Order IDs -->
+       <xpath expr="//div[@t-if='o.reference']" position="after">
+            <t t-set="orders" t-value="o.mapped('sale_order_ids.name')"/>
+            <div t-if="orders" class="col-xs-3">
+                <strong>Sale Order:</strong>
+                <p t-esc="','.join(orders)"/>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="external_layout_footer" inherit_id="report.external_layout">
+        <xpath expr="//t[@t-call='report.external_layout_footer']" position="replace">
+            <h1></h1>
+            <div class="footer">
+                <t t-if="customfooter">
+                    <t t-call="accounting_autolamps.custom_footer"/>
+                </t>
+                <t t-if="not customfooter">
+                    <t t-call="report.external_layout_footer" />
+                </t>
+            </div>
+        </xpath>
+    </template>
+	</data>
+</openerp>

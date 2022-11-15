@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="pos_order_summary_form" model="ir.ui.view">
+            <field name="name">pos.order.summary.form.view</field>
+            <field name="model">pos.order.summary</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="custom_filter"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="from_date"/>
+                        </group>
+                        <group>
+                            <field name="to_date" attrs="{'required': [('custom_filter', '=', True)], 'invisible': [('custom_filter', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <footer style="text-align:center">
+                        <button string="Print" name="btn_print_summary" type="object" class="oe_highlight" icon="gtk-print"/> /
+                        <button string="Preview" name="btn_preview_summary" type="object" class="oe_highlight" icon="terp-camera_test"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+             
+        <record id="action_pos_order_summary" model="ir.actions.act_window">
+            <field name="name">POS Order Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.order.summary</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem
+            id="menu_pos_order_summary"
+            name="By Date"
+            parent="pos_order_summary.pos_order_summary_menu_root"
+            action="action_pos_order_summary"
+            sequence="3"/>
+    </data>
+</openerp>

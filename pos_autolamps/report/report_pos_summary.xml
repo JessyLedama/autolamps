@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_pos_order_summary">
+            <t t-call="report.html_container">
+                <t t-call="report.external_layout">
+                    <div class="page">
+                    <t t-foreach="docs" t-as="o">
+                        <style type="text/css">
+                        </style>
+
+                        <h3 style="text-align: center;"> POS Summary</h3>
+                        <br/>
+                        <br/>
+                        <t t-set="pos_info" t-value="o.get_order_lines()"/>
+                        <t t-if="pos_info.get('orders')">
+                            <table class="table table-condensed" t-if="pos_info.get('orders')">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Receipt Ref.</th>
+                                        <th>Customer</th>
+                                        <th>Salesperson</th>
+                                        <th class="text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tr t-foreach="pos_info.get('orders')" t-as="line">
+                                    <td>
+                                        <span t-esc="line.date_order"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.pos_reference"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.partner_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="line.user_id.name"/>
+                                    </td>
+                                    <td class="text-right">
+                                        KSh. <span t-esc="'{0:,.2f}'.format(line.amount_total)"/>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <!-- FIXME: align this to the right-->
+                            <!--Taxes, Payments, sub-totals-->
+                            <table class="table table-condensed">
+                                <tr>
+                                    <td colspan="2">
+                                        <strong>Payments</strong>
+                                    </td>
+                                </tr>
+                                <tr t-foreach="pos_info['payments']" t-as="payment">
+                                    <td>
+                                        <span t-esc="payment['name']"/>
+                                    </td>
+                                    <td class="text-right">
+                                        KSh. <strong t-esc="'{0:,.2f}'.format(payment['sum'])"/>
+                                    </td>
+                                </tr>
+
+                                <tr><td colspan="2"><strong>Taxes</strong></td></tr>
+                                <tr t-foreach="pos_info['taxes']" t-as="tax">
+                                    <td>
+                                        <span t-esc="tax['name']"/>
+                                    </td>
+                                    <td class="text-right">
+                                        KSh. <strong t-esc="'{0:,.2f}'.format(tax['amount'])"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <strong>Sales Total</strong>
+                                    </td>
+                                    <td class="text-right">
+                                        KSh. <strong t-esc="'{0:,.2f}'.format(pos_info.get('total'))"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                        <t t-if="not pos_info.get('orders')">
+                            <h4 style="text-align: center; font-style: italic;">No Orders found for the selected date(s)!</h4>
+                        </t>
+
+                    </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_report_pos_order_summary"
+            model="pos.order.summary"
+            string="POS Summary"
+            report_type="qweb-html"
+            name="pos_autolamps.report_pos_order_summary"
+            file="pos_autolamps.report_pos_order_summary"
+            menu="False"
+        />
+    </data>
+</openerp>

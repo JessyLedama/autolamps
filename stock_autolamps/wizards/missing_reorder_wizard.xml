@@ -1,0 +1,36 @@
+<openerp>
+<data>
+    <record model='ir.ui.view' id='missing_reorders_wizard'>
+        <field name='name'>Missing Reorders</field>
+        <field name='model'>missing.reorders.wizard</field>
+        <field name='arch' type='xml'>
+            <form string = "Missing Reorders Report Filters">
+                <group string = "Filters">
+                    <group>
+                        <!-- <field name='warehouse_id' widget="many2many_tags"
+                            options="{'no_create': True, 'no_create_edit': True}"/> -->
+                    </group>
+                    <group>
+                        
+                    </group>
+                </group>
+                <footer>
+                    <button name = "print_missing_reorders_xlsx_report" type = "object" string = "Print Missing Reorders" class = "oe_highlight"/>
+                    or
+                    <button special = "cancel" string = "Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id = "launch_missing_reorders_report_wizard"
+        name = "Missing Reorders Report"
+        src_model = "stock.warehouse.orderpoint"
+        res_model = "missing.reorders.wizard"
+        view_mode = "form"
+        target = "new"
+        key2 = "client_action_multi" />
+
+    <menuitem name='Missing Reorders' id='menu_missing_reorder_rules' parent='stock.menu_stock_configuration' action='launch_missing_reorders_report_wizard' groups='autolamps_base.group_warehouse_admin'/>
+</data>
+</openerp>

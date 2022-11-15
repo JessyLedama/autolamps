@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+        <record id="view_account_invoice_filter_extended" model="ir.ui.view">
+            <field name="name">account.invoice.select</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <search>
+                    <filter name="agent" string="Agents" domain="[('partner_id.agent','=','1')]" help="Agents"/>          
+                </search>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id='invoice_form'>
+            <field name='name'>account.invoice.form</field> 
+            <field name='model'>account.invoice</field>
+            <field name='inherit_id' ref='account.invoice_form'/>
+            <field name='arch' type='xml'>
+                <button name='action_cancel_draft' position='after'>
+                    <button name='set_esd' string='Set ETR' type='object' groups='account.group_account_invoice, base.group_sale_salesman'/>
+                </button>
+                <field name="move_id" position="after">
+                    <field name="sale_order_ids" widget="many2many_tags" options="{'open': True}"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="invoice_supplier_form">
+            <field name="name">account.invoice.supplier.form.inherit.import.tax</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Import Taxes">
+                        <field name="direct_tax_line_ids"/>
+                        <group>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="import_tax_total">
+                              <field name="import_tax_total"
+                               string="Total"
+                               class="oe_subtotal_footer_separator"
+                               widget="monetary"
+                               options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                          </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="purchase_import_taxes_tree">
+            <field name="name">purchase.import.taxes</field>
+            <field name="model">direct.tax.lines</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="invoice_line_id"/>
+                    <field name="name"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem id="menu_stock_picking_to_invoice" name="Operations To Invoice" parent="account.menu_finance_receivables" action="stock_autolamps.action_stock_picking_to_invoice" sequence="100"/>
+    </data> 
+</openerp>

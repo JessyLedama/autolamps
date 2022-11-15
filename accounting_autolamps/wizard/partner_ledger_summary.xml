@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="partner_ledger_summary_form" model="ir.ui.view">
+            <field name="name">partner.ledger.summary.form.view</field>
+            <field name="model">partner.ledger.summary.wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Partner Ledger Summary">
+                    <group>
+                        <group>
+                            <field name="filter_date"/>
+                        </group>
+                    </group>
+                    <group attrs="{'invisible': [('filter_date', '=', False)]}">
+                        <group>
+                            <field name="from_date" attrs="{'required': [('filter_date', '=', True)]}"/>
+                        </group>
+                        <group>
+                            <field name="to_date" attrs="{'required': [('filter_date', '=', True)]}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="account_type"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button string="Print" name="btn_generate_report" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+             
+        <record id="action_ledger_summary" model="ir.actions.act_window">
+            <field name="name">Ledger Summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.ledger.summary.wizard</field>
+            <field name="src_model">res.partner</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_partner_id': id}</field>
+        </record>
+
+        <record model="ir.values" id="action_ledger_summary_values">
+            <field name="name">Ledger Summary</field>
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="key2">client_print_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ledger_summary'))"/>
+            <field name="key">action</field>
+            <field name="model" eval="'res.partner'"/>
+        </record>
+
+    </data>
+</openerp>

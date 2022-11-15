@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- SMS -->
+        <record model="ir.ui.view" id="view_picking_form_sms">
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="model">stock.picking</field>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook[last()]" position="inside">
+                    <page name="sms_dispatch" string="Dispatch(SMS)" attrs="{'invisible': [('state', '!=', 'done')]}">
+                        <group>
+                        <group name="left">
+                            <field name="template_id" options="{'no_create': True}" domain="[('model', '=', 'stock.picking')]"/>
+                            <field name="delivery_sms_sent" invisible="1"/>
+                            <field name="delivery_carrier_id" options="{'no_create': True}"/>
+                            <field name="waybill"/>
+                        </group>
+                        <group name="right">
+                            <field name="delivery_sms_sent" invisible="1"/>
+                            <label for="sms_body"/>
+                            <div>
+                                <field name="sms_body"/>
+                                <button name="send_dispatch_sms" string="Send SMS" class="oe_highlight" type="object" attrs="{'invisible': [('delivery_sms_sent', '=', True)]}"/>
+                                <button name="send_dispatch_sms" string="Re-Send SMS" class="oe_highlight"
+                                   type="object" attrs="{'invisible': [('delivery_sms_sent', '=', False)]}" confirm="Are you sure you want to resend the sms?"/>
+                            </div>
+                        </group>
+                    </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- stock.picking inherit search view -->
+        <record id="view_picking_internal_search" model="ir.ui.view">
+            <field name="name">stock.picking.inherit.view.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator[2]" position="after">
+                    <filter name="sale_pickings" string="Sale Pickings" domain="[('sale_order_group','=', True)]" help="Sale Order related picking."/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_picking_tree_done_sale" model="ir.actions.act_window">
+            <field name="name">Done Sale Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_done': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_tree_ready_sale" model="ir.actions.act_window">
+            <field name="name">Ready Sale Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_available': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_tree_done_grouped_sale" model="ir.actions.act_window">
+            <field name="name">Done Sale Transfers by Date</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_done': 1,
+                    'group_by': ['date'],
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_tree_waiting_sale" model="ir.actions.act_window">
+            <field name="name">Waiting Availability Sale Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_waiting': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_tree_late_sale" model="ir.actions.act_window">
+            <field name="name">Late Sale Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_late': 1,
+                    'search_default_confirmed': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_tree_backorder_sale" model="ir.actions.act_window">
+            <field name="name">Sale Backorders</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+                    'search_default_backorder': 1,
+                    'search_default_confirmed': 1,
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+        </record>
+
+        <record id="action_picking_tree_sale" model="ir.actions.act_window">
+            <field name="name">Sale Transfers</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('sale_order_group', '=', True)]</field>
+            <field name="context">{
+                    'search_default_picking_type_id': [active_id],
+                    'default_picking_type_id': active_id,
+                    'contact_display': 'partner_address',
+            }
+            </field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a stock operation. 
+              </p><p>
+                Most operations are prepared automatically by Odoo according
+                to your preconfigured logistics rules, but you can also record
+                manual stock movements.
+              </p>
+            </field>
+        </record>
+
+        <record id="stock_picking_type_sale_kanban" model="ir.ui.view">
+            <field name="name">stock.picking.type.kanban</field>
+            <field name="model">stock.picking.type</field>
+            <field name="sequence" eval="2"/>
+            <field name="arch" type="xml">
+                <kanban class="oe_background_grey" create="0">
+                    <field name="complete_name"/>
+                    <field name="color"/>
+                    <field name="count_picking_ready_sale"/>
+                    <field name="count_picking_draft_sale"/>
+                    <field name="count_picking_waiting_sale"/>
+                    <field name="count_picking_late_sale"/>
+                    <field name="count_picking_backorders_sale"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_stock_picking_type">
+                                <div class="oe_dropdown_toggle oe_dropdown_kanban" groups="stock.group_stock_manager">
+                                    <span class="oe_e">í</span>
+                                    <ul class="oe_dropdown_menu">
+                                        <t t-if="widget.view.is_action_enabled('edit')"><li><a type="edit">Edit...</a></li></t>
+                                        <t t-if="widget.view.is_action_enabled('delete')"><li><a type="delete">Delete</a></li></t>
+                                        <t t-if="widget.view.is_action_enabled('edit')"><li><ul class="oe_kanban_colorpicker" data-field="color"/></li></t>
+                                    </ul>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <h4 class="text-center"><strong><field name="complete_name"/></strong></h4>
+                                    <div class="oe_right">
+                                        <a name="open_barcode_interface" type="object">
+                                            <img src="/stock/static/src/img/scan.png"
+                                                alt="Click to launch the barcode interface"
+                                                class="oe_stock_scan_image" title="Click to launch the barcode interface"/>
+                                        </a>
+                                    </div>
+                                    <div class="oe_items_list oe_kanban_ellipsis">
+                                        <div>
+                                            <a name="%(action_picking_tree_ready_sale)d" type="action">
+                                                <field name="count_picking_ready_sale"/> Ready
+                                            </a>
+                                            <a name="%(action_picking_tree_done_sale)d" type="action" class="oe_sparkline_bar_link">
+                                                <field name="last_done_picking_sale" widget="sparkline_bar" options="{'type': 'tristate', 'colorMap': {'0': 'orange', '-1': 'red', '1': 'green'}}">Last 10 Done Operations</field>
+                                            </a>
+                                        </div>
+                                        <div t-if="record.count_picking_waiting_sale.raw_value &gt; 0">
+                                            <a name="%(action_picking_tree_waiting_sale)d" type="action">
+                                                <field name="count_picking_waiting_sale"/> Waiting Availability
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <a name="%(action_picking_tree_sale)d" type="action">All Operations</a>
+                                        </div>
+                                    </div>
+                                    <div class="oe_picking_type_gauge">
+                                        <field name="rate_picking_late_sale" widget="gauge" style="width:150px; height: 110px;" options="{'levelcolors': ['#a9d70b', '#f9c802', '#ff0000'], 'action_jump': '%(action_picking_tree_late_sale)d'}">Late (%%)</field>
+                                        <field name="rate_picking_backorders_sale" widget="gauge" style="width:150px; height: 110px;">Backorders (%%)</field>
+                                        <div class="oe_gauge_labels">
+                                            <div class="oe_gauge_label_column">
+                                                <a name="%(action_picking_tree_late_sale)d" type="action">
+                                                    <field name="count_picking_late_sale"/> Late
+                                                </a>
+                                            </div>
+                                            <div class="oe_gauge_label_column">
+                                                <a name="%(action_picking_tree_backorder_sale)d" type="action">
+                                                    <field name="count_picking_backorders_sale"/> Backorders
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_sale_picking_type_form" model="ir.actions.act_window">
+            <field name="name">Sale Operations</field>
+            <field name="res_model">stock.picking.type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,form</field>
+        </record>
+
+        <record id="action_sale_picking_type_form_kanban" model="ir.actions.act_window.view">
+            <field name="act_window_id" ref="action_sale_picking_type_form"/>
+            <field name="view_id" ref="stock_picking_type_sale_kanban" />
+            <field name="view_mode">kanban</field>
+            <field name="sequence" eval="2"/>
+        </record>
+
+        <menuitem id="sale_picking_type_menu_act" name="Sale Operations" parent="stock.menu_stock_warehouse_mgmt" action="action_sale_picking_type_form" sequence="2"/>
+    </data>
+</openerp>

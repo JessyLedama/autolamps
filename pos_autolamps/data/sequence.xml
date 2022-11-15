@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+    <record model="ir.sequence" id="seq_pos_order">
+        <field name="name">POS Order - Custom Sequence</field>
+        <field name="code">pos.order</field>
+        <field name="prefix">POS-%(year)s-</field>
+        <field name="padding">7</field>
+        <field name="implementation">no_gap</field>
+    </record>
+
+ </data>
+</openerp>

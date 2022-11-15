@@ -1,0 +1,232 @@
+<openerp>
+    <data>
+        <!-- Reorder Rules -->
+        <record model="ir.ui.view" id="view_warehouse_orderpoint_tree_autolamps">
+            <field name="model">stock.warehouse.orderpoint</field>
+            <field name="inherit_id" ref="stock.view_warehouse_orderpoint_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="code"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_picking_internal_search" model="ir.ui.view">
+            <field name="name">stock.picking.autolamps.internal.search</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//separator" position="after">
+                    <filter icon="terp-go-month" string="Today"
+                            domain="[('date','&lt;=', (datetime.date.today()).strftime('%Y-%m-%d')),('date','&gt;=',(datetime.date.today()).strftime('%Y-%m-%d'))]"
+                            help="Created today"/>
+                    <filter icon="terp-go-month" string="Yesterday"
+                            domain="[('date','&gt;=', ((context_today()-datetime.timedelta(days=1)).strftime('%Y-%m-%d 00:00:00'))), ('date','&lt;=', ((context_today()+datetime.timedelta(days=0)).strftime('%Y-%m-%d 00:00:00')))]"
+                            help="Created yesterday"/>
+                    <filter icon="terp-go-month" string="This Month"
+                            domain="[('date','&lt;=', (datetime.date.today() + relativedelta(day=31)).strftime('%Y-%m-%d')),('date','&gt;=',(datetime.date.today() - relativedelta(day=1)).strftime('%Y-%m-%d'))]"
+                            help="Created this month"/>
+                    <filter icon="terp-go-month" string="Last Month"
+                            domain="[('date','&gt;=',(context_today()-relativedelta(months=1)).strftime('%Y-%m-01')),('date','&lt;',time.strftime('%Y-%m-01'))]"
+                            help="Created last month"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id = "view_picking_form_autolamps" model = 'ir.ui.view'>
+            <field name = 'name'>stock.picking.form.autolamps</field>
+            <field name = 'model'>stock.picking</field>
+            <field name = 'inherit_id' ref = 'stock.view_picking_form'/>
+            <field name = 'arch' type = 'xml'>
+                <!-- Rights for who can reverse transfer -->
+                <button name = "%(stock.act_stock_return_picking)d" position = "attributes">
+                    <attribute name = "groups">autolamps_base.group_warehouse_reverse_transfer</attribute>
+                </button>
+
+                <!-- Rights for who can force availability -->
+                <button name="force_assign" position="attributes">
+                    <attribute name="groups">autolamps_base.group_warehouse_admin</attribute>
+                </button>
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="original_picking_ids" widget="many2many_tags" options="{'no_open': False}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_inherit_form2" model="ir.ui.view">
+            <field name="name">stock.picking.form.inherit.stock.account</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock_account.view_picking_inherit_form2"/>
+            <field name="arch" type="xml">
+                <field name="invoice_state" position="attributes">
+                    <attribute name="groups">autolamps_base.group_warehouse_admin</attribute>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id = "view_picking_tree_autolamps">
+            <field name="name">stock.picking.tree.autolamps</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_uom_qty" position="after">
+                    <field name="location_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_inventory_form_autolamps">
+            <field name="name">Stock Inventory Form</field>
+            <field name="model">stock.inventory</field>
+            <field name="inherit_id" ref="stock.view_inventory_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_qty']" position="after">
+                    <field name="variance"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model='ir.ui.view' id = 'procurement_group_tree_autolamps'>
+            <field name="name">Procurement Groups</field>
+            <field name="model">procurement.group</field>
+            <field name="arch" type="xml">
+                <tree string="Procurement Groups">
+                    <field name="name"/>
+                    <field name="move_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_procurement_filter">
+            <field name="name">Procurement Orders Search</field>
+            <field name="model">procurement.order</field>
+            <field name="inherit_id" ref="procurement.view_procurement_filter"/>
+            <field name="arch" type="xml">
+                <field name="state" position="after">
+                    <filter string="Confirmed" domain="[('state','=','confirmed')]" name="state_confirmed_filter"/>
+                    <filter string="Running" domain="[('state','=','running')]" name="state_running_filter"/>
+                    <filter string="Done" domain="[('state','=','done')]" name="state_done_filter"/>
+                    <filter string="Cancelled" domain="[('state','=','cancel')]" name="state_cancelled_filter"/>
+                </field>
+                <xpath expr="//group" position="inside">
+                    <separator/>
+                    <filter name="groupby_warehouse" context="{'group_by':'warehouse_id'}" string="Warehouse"/>
+                    <filter name="groupby_location" context="{'group_by':'location_id'}" string="Location"/>
+                    <filter name="groupby_procurement_group" context="{'group_by':'group_id'}" string="Procurement Group"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="procurement_groups_action_autolamps">
+            <field name="name">Procurement Groups</field>
+            <field name="res_model">procurement.group</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Procurement Groups" id="procurement_groups_menu" parent="stock.menu_stock_configuration" action="procurement_groups_action_autolamps" sequence="20"/>
+
+        <!-- Remove scrap products: Traceability -> Stock Moves tree view -->
+        <record model="ir.ui.view" id ="view_move_tree_autolamps">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_tree"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.move_scrap)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id ="view_move_form_autolamps">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.move_scrap)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id ="view_move_tree_receipt_picking">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_tree_receipt_picking"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.move_scrap)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id ="view_move_picking_tree">
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <button name="%(stock.move_scrap)d" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </button>
+            </field>
+        </record>
+
+        <!-- stock.history inherit tree view -->
+        <record id="view_stock_history_report_tree" model="ir.ui.view">
+            <field name="name">stock.history.inherit.view.tree</field>
+            <field name="model">stock.history</field>
+            <field name="inherit_id" ref="stock_account.view_stock_history_report_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='source']" position="after">
+                    <field name="picking_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- stock.history inherit graph view -->
+        <record id="view_stock_history_report_graph" model="ir.ui.view">
+            <field name="name">stock.history.inherit.view.graph</field>
+            <field name="model">stock.history</field>
+            <field name="inherit_id" ref="stock_account.view_stock_history_report_graph"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="picking_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_stock_picking_to_consolidate" model="ir.actions.act_window">
+            <field name="name">Stock Operations To Consolidate</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="domain">[('state', 'not in', ['done', 'cancel']), ('sale_order_group', '=', True)]</field>
+            <field name="context">{'group_by': ['origin']}</field>
+        </record>
+
+        <record id="action_stock_picking_to_invoice" model="ir.actions.act_window">
+            <field name="name">Stock Operations To Invoice</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+            <field name="domain">[('state', '=', 'done'), ('invoice_state', '=', '2binvoiced'), ('sale_order_group', '=', True)]</field>
+            <field name="context">{'group_by': ['origin']}</field>
+        </record>
+
+        <menuitem id="menu_stock_picking_to_consolidate" name="Operations To Consolidate" parent="stock.menu_stock_warehouse_mgmt" action="action_stock_picking_to_consolidate" sequence="3"/>
+        <menuitem id="menu_stock_picking_to_invoice" name="Operations To Invoice" parent="stock.menu_stock_warehouse_mgmt" action="action_stock_picking_to_invoice" sequence="4"/>
+
+
+        <record model='ir.ui.view' id='view_warehouse'>
+            <field name='name'>stock.warehouse</field>
+            <field name='model'>stock.warehouse</field>
+            <field name='inherit_id' ref='stock.view_warehouse'/>
+            <field name='arch' type='xml'>
+                <field name='resupply_wh_ids' position='after'>
+                    <field name='resupply_procurement_group_id'/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp> 

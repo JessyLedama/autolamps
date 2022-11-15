@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <template id="assets_common" name="pos_printing_autolamps assets" inherit_id="web.assets_common">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/pos_printing_autolamps/static/src/js/main.js">
+                </script>
+                <script type="text/javascript" src="/pos_printing_autolamps/static/src/js/devices.js">
+                </script>
+                <script type="text/javascript" src="/pos_printing_autolamps/static/src/js/screens.js">
+                </script>
+                <script  src="https://cdnjs.cloudflare.com/ajax/libs/rsvp/4.8.5/rsvp.min.js" 
+                integrity="sha512-HFmmKqGaLV2NYgTKWTLxKYsreelx/C5mZLO5kgcA00If59U0YbjAdOpVsoSAb6YTi5K11nVtotiQnSHkltN2XQ==" 
+                crossorigin="anonymous">
+                </script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js" integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ==" crossorigin="anonymous"></script>
+                <script src="https://cdn.rawgit.com/kjur/jsrsasign/c057d3447b194fa0a3fdcea110579454898e093d/jsrsasign-all-min.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report
+            id="purchase_order_xlsx"
+            model="purchase.order"
+            string="Purchase Order Excel"
+            report_type="xlsx"
+            name="purchase.order.xlsx"
+            file="purchase.order.xlsx"
+            attachment_use="False"
+        />
+    </data>
+</openerp>

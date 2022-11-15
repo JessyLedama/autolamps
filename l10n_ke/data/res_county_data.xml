@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="county_mombasa" model="res.country.state">
+            <field name="code" eval="1"/>
+            <field name="name">Mombasa</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kwale" model="res.country.state">
+            <field name="code" eval="2"/>
+            <field name="name">Kwale</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kilifi" model="res.country.state">
+            <field name="code" eval="3"/>
+            <field name="name">Kilifi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_tana_river" model="res.country.state">
+            <field name="code" eval="4"/>
+            <field name="name">Tana River</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_lamu" model="res.country.state">
+            <field name="code" eval="5"/>
+            <field name="name">Lamu</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_taita_taveta" model="res.country.state">
+            <field name="code" eval="6"/>
+            <field name="name">Taita-Taveta</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_garissa" model="res.country.state">
+            <field name="code" eval="7"/>
+            <field name="name">Garissa</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_wajir" model="res.country.state">
+            <field name="code" eval="8"/>
+            <field name="name">wajir</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_mandera" model="res.country.state">
+            <field name="code" eval="9"/>
+            <field name="name">Mandera</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_marsabit" model="res.country.state">
+            <field name="code" eval="10"/>
+            <field name="name">Marsabit</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_isiolo" model="res.country.state">
+            <field name="code" eval="11"/>
+            <field name="name">Isiolo</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_meru" model="res.country.state">
+            <field name="code" eval="12"/>
+            <field name="name">Meru</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_tharaka_nithi" model="res.country.state">
+            <field name="code" eval="13"/>
+            <field name="name">Tharaka-Nithi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_embu" model="res.country.state">
+            <field name="code" eval="14"/>
+            <field name="name">Embu</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kitui" model="res.country.state">
+            <field name="code" eval="15"/>
+            <field name="name">Kitui</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_machakos" model="res.country.state">
+            <field name="code" eval="16"/>
+            <field name="name">Machakos</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_makueni" model="res.country.state">
+            <field name="code" eval="17"/>
+            <field name="name">Makueni</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_nyandarua" model="res.country.state">
+            <field name="code" eval="18"/>
+            <field name="name">Nyandarua</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_nyeri" model="res.country.state">
+            <field name="code" eval="19"/>
+            <field name="name">Nyeri</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kirinyaga" model="res.country.state">
+            <field name="code" eval="20"/>
+            <field name="name">Kirinyaga</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_muranga" model="res.country.state">
+            <field name="code" eval="21"/>
+            <field name="name">Murang'a</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kiambu" model="res.country.state">
+            <field name="code" eval="22"/>
+            <field name="name">Kiambu</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_turkana" model="res.country.state">
+            <field name="code" eval="23"/>
+            <field name="name">Turkana</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_west_pokot" model="res.country.state">
+            <field name="code" eval="24"/>
+            <field name="name">West Pokot</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_samburu" model="res.country.state">
+            <field name="code" eval="25"/>
+            <field name="name">Samburu</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_trans_nzoia" model="res.country.state">
+            <field name="code" eval="26"/>
+            <field name="name">Trans Nzoia</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_uasin_gishu" model="res.country.state">
+            <field name="code" eval="27"/>
+            <field name="name">Uasin Gishu</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_elgeyo_marakwet" model="res.country.state">
+            <field name="code" eval="28"/>
+            <field name="name">Elgeyo-Marakwet</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_nandi" model="res.country.state">
+            <field name="code" eval="29"/>
+            <field name="name">Nandi</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_baringo" model="res.country.state">
+            <field name="code" eval="30"/>
+            <field name="name">Baringo</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_laikipia" model="res.country.state">
+            <field name="code" eval="31"/>
+            <field name="name">Laikipia</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_nakuru" model="res.country.state">
+            <field name="code" eval="32"/>
+            <field name="name">Nakuru</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_narok" model="res.country.state">
+            <field name="code" eval="33"/>
+            <field name="name">Narok</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kajiado" model="res.country.state">
+            <field name="code" eval="34"/>
+            <field name="name">Kajiado</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kericho" model="res.country.state">
+            <field name="code" eval="35"/>
+            <field name="name">Kericho</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_bomet" model="res.country.state">
+            <field name="code" eval="36"/>
+            <field name="name">Bomet</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kakamega" model="res.country.state">
+            <field name="code" eval="37"/>
+            <field name="name">Kakamega</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_vihiga" model="res.country.state">
+            <field name="code" eval="38"/>
+            <field name="name">Vihiga</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_bungoma" model="res.country.state">
+            <field name="code" eval="39"/>
+            <field name="name">Bungoma</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_busia" model="res.country.state">
+            <field name="code" eval="40"/>
+            <field name="name">Busia</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_siaya" model="res.country.state">
+            <field name="code" eval="41"/>
+            <field name="name">Siaya</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kisumu" model="res.country.state">
+            <field name="code" eval="42"/>
+            <field name="name">Kisumu</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_homa_bay" model="res.country.state">
+            <field name="code" eval="43"/>
+            <field name="name">Homa Bay</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_migori" model="res.country.state">
+            <field name="code" eval="44"/>
+            <field name="name">Migori</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_kisii" model="res.country.state">
+            <field name="code" eval="45"/>
+            <field name="name">Kisii</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_nyamira" model="res.country.state">
+            <field name="code" eval="46"/>
+            <field name="name">Nyamira</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+
+        <record id="county_nairobi" model="res.country.state">
+            <field name="code" eval="47"/>
+            <field name="name">Nairobi City</field>
+            <field name="country_id" ref="base.ke"/>
+        </record>
+    </data>
+</openerp>

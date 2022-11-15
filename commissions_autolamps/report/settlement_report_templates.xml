@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="report_settlement_summary_document">
+            <t t-call="report.external_layout">
+                <div class="page">
+                    <!-- <div class="row">
+                    </div> -->
+
+                    <h2>
+                        <span>Commission Settlements Report</span>
+                    </h2>
+                    <div class="row mt32 mb32">
+                        <div class="col-xs-2">
+                            <strong>Date From:</strong>
+                            <p t-field="o.date_from"/>
+                            <!-- <p t-esc="data['form']['date_from']"/> -->
+                        </div>
+                        <div class="col-xs-2">
+                            <strong>Date To:</strong>
+                            <p t-field="o.date_to"/>
+                            <!-- <p t-esc="data['form']['date_to']"></p> -->
+                        </div>
+                    </div>
+
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>Agent</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Gross Sales</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Gross Commission</th>
+                                <th style="word-wrap: break-word; margin-left: 20px;">Payable Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.settlement_ids" t-as="l">
+                                <td>
+                                    <span t-field="l.agent"/>
+                                </td>
+                                <td style="margin-left: 20px;">
+                                    <span t-field="l.gross_total"/>
+                                </td>
+                                <td style="margin-left: 20px;">
+                                    <span t-field="l.total_valid"/>
+                                </td>
+                                <td class="text-right" style="margin-left: 20px;">
+                                    <span t-field="l.total_payable"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 30px;">
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-4 pull-right">
+                            <table class="table table-condensed">
+                                <tr class="border-black">
+                                    <td><strong>Total Commission</strong></td>
+                                    <td>
+                                        <span t-esc="o.get_total_payable()"/>
+                                        <!-- <span t-field="o.total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/> -->
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_settlement_summary">
+            <t t-call="report.html_container">
+                <t t-foreach="doc_ids" t-as="doc_id">
+                    <t t-raw="translate_doc(doc_id, doc_model, 'create_uid.lang', 'commissions_autolamps.report_settlement_summary_document')"/>
+                </t>
+            </t>
+        </template>
+        
+    </data>
+</openerp>
